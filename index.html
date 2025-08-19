@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إختبارات سلاح الأزهري - نظام الاختبارات الإلكترونية</title>
+    <meta name="description" content="نظام متكامل للاختبارات الإلكترونية لطلبة الأزهر الشريف بجميع المراحل التعليمية">
+    <meta name="keywords" content="اختبارات, الأزهر, تعليم, اختبارات إلكترونية, سلاح الأزهري">
+    <meta name="author" content="إختبارات سلاح الأزهري">
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdyuIMWOk4qbKO_qCaKOHo859JMs3To_OJjpQ8u5fU0ULewA-AdNp7Izuv9PUOIOTGTUsNM6DTVVbRWKe2OEDTBcHnxOnOrCylsq_V3YhUFPqTkPJ7XOuzWzbCXKW-UnoLEwqsE8XjaHiWPZu2dC_pESia4uQOATzelupKDAUbuO1_jH2003wsgUO0PPiO/s1080/Selah%20Elazhary%20Transperant%20logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -29,14 +33,14 @@
             --gold-color: #FFD700;
             --silver-color: #C0C0C0;
             --bronze-color: #CD7F32;
-            --admin-primary: #2c3e50;
-            --admin-secondary: #34495e;
-            --admin-accent: #3498db;
-            --admin-success: #2ecc71;
-            --admin-danger: #e74c3c;
-            --admin-warning: #f39c12;
-            --admin-text: #ecf0f1;
-            --admin-border: #46627f;
+            --admin-primary: #1a1a2e;
+            --admin-secondary: #16213e;
+            --admin-accent: #0f3460;
+            --admin-success: #00b894;
+            --admin-danger: #d63031;
+            --admin-warning: #fdcb6e;
+            --admin-text: #e2e2e2;
+            --admin-border: #2d4059;
             --login-primary: #4a6fa5;
             --login-secondary: #166088;
             --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -44,6 +48,8 @@
             --transition: all 0.3s ease;
             --border-radius: 8px;
             --border-radius-lg: 12px;
+            --whatsapp-color: #25D366;
+            --ad-color: #FF9800;
         }
         
         * {
@@ -59,6 +65,67 @@
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* شاشة التحميل */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .splash-logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .splash-title {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .splash-subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .splash-loader {
+            width: 80%;
+            max-width: 300px;
+            height: 8px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .splash-progress {
+            height: 100%;
+            width: 0;
+            background-color: white;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .container {
@@ -381,6 +448,24 @@
             color: white;
         }
         
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+        
+        .btn-ad {
+            background-color: var(--ad-color);
+            color: white;
+        }
+        
+        .btn-ad:hover {
+            background-color: #F57C00;
+        }
+        
         .btn-sm {
             padding: 8px 15px;
             font-size: 14px;
@@ -485,7 +570,7 @@
             font-size: 20px;
         }
         
-        /* Admin Panel */
+        /* Admin Panel - New Design */
         .admin-panel {
             position: fixed;
             top: 0;
@@ -497,7 +582,7 @@
             z-index: 1000;
             transition: var(--transition);
             overflow-y: auto;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
             display: none;
         }
         
@@ -508,10 +593,13 @@
         
         .admin-header {
             padding: 20px;
-            border-bottom: 1px solid var(--admin-border);
+            background-color: var(--admin-accent);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .admin-header h2 {
@@ -519,6 +607,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            margin: 0;
         }
         
         .close-admin {
@@ -534,36 +623,73 @@
             color: var(--admin-danger);
         }
         
-        .admin-tabs {
+        .admin-sidebar {
+            width: 70px;
+            background-color: var(--admin-secondary);
+            height: calc(100vh - 60px);
+            position: fixed;
             display: flex;
-            border-bottom: 1px solid var(--admin-border);
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
         }
         
-        .admin-tab {
-            padding: 15px 20px;
+        .admin-tab-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
             cursor: pointer;
             transition: var(--transition);
-            flex: 1;
-            text-align: center;
-            border-bottom: 3px solid transparent;
+            color: var(--admin-text);
+            background-color: transparent;
+            border: none;
         }
         
-        .admin-tab:hover {
+        .admin-tab-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
         
-        .admin-tab.active {
-            border-bottom-color: var(--admin-accent);
-            background-color: rgba(255, 255, 255, 0.05);
+        .admin-tab-btn.active {
+            background-color: var(--admin-accent);
+            color: white;
+        }
+        
+        .admin-tab-btn i {
+            font-size: 20px;
+        }
+        
+        .admin-content {
+            margin-right: 70px;
+            padding: 20px;
         }
         
         .admin-tab-content {
-            padding: 20px;
             display: none;
         }
         
         .admin-tab-content.active {
             display: block;
+        }
+        
+        .admin-card {
+            background-color: var(--admin-secondary);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--admin-border);
+        }
+        
+        .admin-card h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .admin-form {
@@ -585,7 +711,7 @@
             padding: 12px 15px;
             border: 1px solid var(--admin-border);
             border-radius: var(--border-radius);
-            background-color: var(--admin-secondary);
+            background-color: rgba(255, 255, 255, 0.05);
             color: var(--admin-text);
             transition: var(--transition);
         }
@@ -593,7 +719,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--admin-accent);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(15, 52, 96, 0.3);
         }
         
         textarea.form-control {
@@ -608,10 +734,11 @@
         .btn-admin {
             background-color: var(--admin-accent);
             color: white;
+            border: none;
         }
         
         .btn-admin:hover {
-            background-color: #2980b9;
+            background-color: #0d2a4a;
         }
         
         .questions-list {
@@ -664,7 +791,7 @@
         }
         
         .correct-option {
-            background-color: rgba(46, 204, 113, 0.2);
+            background-color: rgba(0, 184, 148, 0.2);
             border-left: 3px solid var(--admin-success);
         }
         
@@ -686,7 +813,7 @@
             padding: 8px 10px;
         }
         
-        .admin-stats {
+        .admin-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
@@ -699,6 +826,12 @@
             padding: 15px;
             text-align: center;
             border: 1px solid var(--admin-border);
+            transition: var(--transition);
+        }
+        
+        .admin-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .admin-stat-value {
@@ -711,21 +844,6 @@
         .admin-stat-label {
             font-size: 14px;
             color: rgba(236, 240, 241, 0.7);
-        }
-        
-        .system-settings {
-            background-color: var(--admin-secondary);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--admin-border);
-        }
-        
-        .system-settings h4 {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
         .setting-item {
@@ -805,19 +923,19 @@
         }
         
         .success-message {
-            background-color: rgba(46, 204, 113, 0.2);
+            background-color: rgba(0, 184, 148, 0.2);
             color: var(--admin-success);
             border-left: 3px solid var(--admin-success);
         }
         
         .error-message {
-            background-color: rgba(231, 76, 60, 0.2);
+            background-color: rgba(214, 48, 49, 0.2);
             color: var(--admin-danger);
             border-left: 3px solid var(--admin-danger);
         }
         
         /* Modal Styles */
-        .password-modal, .subject-modal {
+        .password-modal, .subject-modal, .login-modal, .register-modal, .ad-modal, .section-modal, .edit-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -831,7 +949,7 @@
         }
         
         .modal-box {
-            background-color: var(--admin-primary);
+            background-color: white;
             border-radius: var(--border-radius-lg);
             padding: 25px;
             width: 90%;
@@ -845,7 +963,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--admin-text);
+            color: var(--dark-color);
         }
         
         .modal-buttons {
@@ -942,80 +1060,45 @@
             margin-bottom: 30px;
         }
         
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .year-selection {
-                grid-template-columns: 1fr;
-            }
-            
-            .branch-selection {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .stat-item {
-                width: 100%;
-            }
-            
-            .admin-panel {
-                width: 90%;
-                left: -90%;
-            }
-            
-            .admin-filters {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .true-false-options {
-                flex-direction: column;
-            }
+        /* User Profile */
+        .user-profile {
+            position: relative;
+            cursor: pointer;
         }
         
-        /* Animations */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Login Floating Message */
+        .login-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            cursor: pointer;
+            transition: var(--transition);
         }
         
-        @keyframes modalFadeIn {
-            from { 
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Medal Styles */
-        .fa-medal {
-            font-size: 24px;
-            margin-right: 5px;
-        }
-        
-        .gold {
-            color: var(--gold-color);
-        }
-        
-        .silver {
-            color: var(--silver-color);
-        }
-        
-        .bronze {
-            color: var(--bronze-color);
+        .login-floating:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
         }
         
         /* Secure Badge */
@@ -1069,9 +1152,144 @@
             max-width: 500px;
         }
         
+        /* Ad Container */
+        .ad-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .ad-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+        
+        .ad-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .ad-description {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+        }
+        
+        .ad-whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background-color: var(--whatsapp-color);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .ad-whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .year-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .branch-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+            }
+            
+            .admin-panel {
+                width: 100%;
+                left: -100%;
+            }
+            
+            .admin-filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .true-false-options {
+                flex-direction: column;
+            }
+            
+            .admin-sidebar {
+                width: 60px;
+            }
+            
+            .admin-content {
+                margin-right: 60px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Medal Styles */
+        .fa-medal {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        
+        .gold {
+            color: var(--gold-color);
+        }
+        
+        .silver {
+            color: var(--silver-color);
+        }
+        
+        .bronze {
+            color: var(--bronze-color);
+        }
+        
         /* Print Styles */
         @media print {
-            .no-print, .back-btn, .admin-panel, .overlay, .password-modal, .subject-modal, .secure-badge {
+            .no-print, .back-btn, .admin-panel, .overlay, .password-modal, .subject-modal, .secure-badge, .login-floating {
                 display: none !important;
             }
             
@@ -1090,18 +1308,26 @@
     </style>
 </head>
 <body>
+    <!-- شاشة التحميل -->
+    <div class="splash-screen" id="splash-screen">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdyuIMWOk4qbKO_qCaKOHo859JMs3To_OJjpQ8u5fU0ULewA-AdNp7Izuv9PUOIOTGTUsNM6DTVVbRWKe2OEDTBcHnxOnOrCylsq_V3YhUFPqTkPJ7XOuzWzbCXKW-UnoLEwqsE8XjaHiWPZu2dC_pESia4uQOATzelupKDAUbuO1_jH2003wsgUO0PPiO/s1080/Selah%20Elazhary%20Transperant%20logo.png" alt="Logo" class="splash-logo">
+        <h1 class="splash-title">إختبارات سلاح الأزهري</h1>
+        <p class="splash-subtitle">نظام الاختبارات الإلكترونية</p>
+        <div class="splash-loader">
+            <div class="splash-progress" id="splash-progress"></div>
+        </div>
+    </div>
+    
     <div class="container">
         <header>
             <div class="logo-container" id="logo-container">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdyuIMWOk4qbKO_qCaKOHo859JMs3To_OJjpQ8u5fU0ULewA-AdNp7Izuv9PUOIOTGTUsNM6DTVVbRWKe2OEDTBcHnxOnOrCylsq_V3YhUFPqTkPJ7XOuzWzbCXKW-UnoLEwqsE8XjaHiWPZu2dC_pESia4uQOATzelupKDAUbuO1_jH2003wsgUO0PPiO/s1080/Selah%20Elazhary%20Transperant%20logo.png" alt="Logo" class="logo-img">
                 <div class="logo">إختبارات سلاح الأزهري</div>
             </div>
-            <div class="quiz-info" id="quiz-info">
-                <div class="user-profile" id="user-profile">
-                    <div class="user-avatar"><i class="fas fa-user"></i></div>
-                </div>
-            </div>
         </header>
+        
+        <!-- عرض الإعلان إذا كان موجودًا -->
+        <div id="ad-container" style="display: none;"></div>
         
         <div id="year-selection-container" class="year-selection">
             <!-- المرحلة الإعدادية -->
@@ -1135,7 +1361,7 @@
             <div class="year-card" data-year="third">
                 <i class="fas fa-trophy"></i>
                 <h3>الصف الثالث الثانوي</h3>
-                <p>إختبارات خاصة بالصف الثالث الثانوي الأزهري</p>
+                <p>إختبارات خاصة بالالصف الثالث الثانوي الأزهري</p>
             </div>
         </div>
         
@@ -1216,7 +1442,7 @@
         <i class="fas fa-arrow-left"></i>
     </div>
     
-    <!-- لوحة التحكم العائمة -->
+    <!-- لوحة التحكم العائمة - التصميم الجديد -->
     <div class="admin-panel" id="admin-panel">
         <div class="admin-header">
             <h2>
@@ -1228,272 +1454,415 @@
             </button>
         </div>
         
-        <div class="admin-tabs">
-            <div class="admin-tab active" data-tab="questions">إدارة الإختبارات</div>
-            <div class="admin-tab" data-tab="settings">الإعدادات</div>
-            <div class="admin-tab" data-tab="stats">الإحصائيات</div>
-            <div class="admin-tab" data-tab="users">المستخدمين</div>
+        <div class="admin-sidebar">
+            <button class="admin-tab-btn active" data-tab="questions" title="إدارة الإختبارات">
+                <i class="fas fa-question-circle"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="settings" title="الإعدادات">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="stats" title="الإحصائيات">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="sections" title="إدارة الأقسام">
+                <i class="fas fa-layer-group"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="ads" title="إدارة الإعلانات">
+                <i class="fas fa-ad"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="site-control" title="التحكم في الموقع">
+                <i class="fas fa-globe"></i>
+            </button>
+            <button class="admin-tab-btn" data-tab="edits" title="التعديلات العامة">
+                <i class="fas fa-edit"></i>
+            </button>
         </div>
         
-        <div class="admin-tab-content active" id="questions-tab">
-            <div class="admin-form">
-                <div class="form-group">
-                    <label for="question-year">الصف الدراسي:</label>
-                    <select id="question-year" class="form-control">
-                        <option value="prep1">الصف الأول الإعدادي</option>
-                        <option value="prep2">الصف الثاني الإعدادي</option>
-                        <option value="prep3">الصف الثالث الإعدادي</option>
-                        <option value="first">الصف الأول الثانوي</option>
-                        <option value="second">الصف الثاني الثانوي</option>
-                        <option value="third">الصف الثالث الثانوي</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="question-section">القسم:</label>
-                    <select id="question-section" class="form-control">
-                        <!-- سيتم ملؤها ديناميكيًا بناءً على الصف المختار -->
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="question-subject">المادة:</label>
-                    <div style="display: flex; gap: 10px;">
-                        <select id="question-subject" class="form-control" style="flex: 1;">
-                            <option value="">اختر المادة</option>
-                        </select>
-                        <button class="btn btn-admin btn-sm" id="add-subject-btn" style="width: 40px;">
-                            <i class="fas fa-plus"></i>
+        <div class="admin-content">
+            <!-- تبويب إدارة الإختبارات -->
+            <div id="questions-tab" class="admin-tab-content active">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> إضافة سؤال جديد</h3>
+                    <div class="admin-form">
+                        <div class="form-group">
+                            <label for="question-text">نص السؤال:</label>
+                            <textarea id="question-text" class="form-control" rows="3" placeholder="أدخل نص السؤال هنا"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-type">نوع السؤال:</label>
+                            <select id="question-type" class="form-control">
+                                <option value="mcq">اختيار من متعدد</option>
+                                <option value="truefalse">صح أم خطأ</option>
+                            </select>
+                        </div>
+                        <div id="mcq-options">
+                            <div class="form-group">
+                                <label>الخيارات:</label>
+                                <input type="text" id="option1" class="form-control option-input" placeholder="الخيار الأول">
+                                <input type="text" id="option2" class="form-control option-input" placeholder="الخيار الثاني">
+                                <input type="text" id="option3" class="form-control option-input" placeholder="الخيار الثالث">
+                                <input type="text" id="option4" class="form-control option-input" placeholder="الخيار الرابع">
+                            </div>
+                            <div class="form-group">
+                                <label for="correct-answer">الإجابة الصحيحة:</label>
+                                <select id="correct-answer" class="form-control">
+                                    <option value="1">الخيار الأول</option>
+                                    <option value="2">الخيار الثاني</option>
+                                    <option value="3">الخيار الثالث</option>
+                                    <option value="4">الخيار الرابع</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="truefalse-options" style="display: none;">
+                            <div class="form-group">
+                                <label for="tf-correct-answer">الإجابة الصحيحة:</label>
+                                <select id="tf-correct-answer" class="form-control">
+                                    <option value="true">صح</option>
+                                    <option value="false">خطأ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-category">التصنيف:</label>
+                            <input type="text" id="question-category" class="form-control" placeholder="تصنيف السؤال (اختياري)">
+                        </div>
+                        <div class="form-group">
+                            <label for="question-difficulty">مستوى الصعوبة:</label>
+                            <select id="question-difficulty" class="form-control">
+                                <option value="easy">سهل</option>
+                                <option value="medium">متوسط</option>
+                                <option value="hard">صعب</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-year">الصف الدراسي:</label>
+                            <select id="question-year" class="form-control">
+                                <option value="prep1">الصف الأول الإعدادي</option>
+                                <option value="prep2">الصف الثاني الإعدادي</option>
+                                <option value="prep3">الصف الثالث الإعدادي</option>
+                                <option value="first">الصف الأول الثانوي</option>
+                                <option value="second">الصف الثاني الثانوي</option>
+                                <option value="third">الصف الثالث الثانوي</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-section">القسم:</label>
+                            <select id="question-section" class="form-control">
+                                <option value="scientific">علمي</option>
+                                <option value="literary">أدبي</option>
+                                <option value="arabic">عربي</option>
+                                <option value="islamic">شرعي</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-subject">المادة الدراسية:</label>
+                            <select id="question-subject" class="form-control">
+                                <option value="">جميع المواد</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-admin" id="add-question-btn">
+                            <i class="fas fa-plus"></i> إضافة السؤال
                         </button>
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="question-type">نوع السؤال:</label>
-                    <select id="question-type" class="form-control">
-                        <option value="mcq">اختيار من متعدد</option>
-                        <option value="true_false">صح أو خطأ</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="question-text">نص السؤال:</label>
-                    <textarea id="question-text" class="form-control" placeholder="أدخل نص السؤال هنا"></textarea>
-                </div>
-                
-                <div id="mcq-options" class="form-group">
-                    <label>خيارات الاختيار من متعدد:</label>
-                    <input type="text" class="form-control option-input" placeholder="الخيار الأول" data-option="1">
-                    <input type="text" class="form-control option-input" placeholder="الخيار الثاني" data-option="2" style="margin-top: 10px;">
-                    <input type="text" class="form-control option-input" placeholder="الخيار الثالث" data-option="3" style="margin-top: 10px;">
-                    <input type="text" class="form-control option-input" placeholder="الخيار الرابع" data-option="4" style="margin-top: 10px;">
-                </div>
-                
-                <div class="form-group">
-                    <label for="correct-answer">الإجابة الصحيحة:</label>
-                    <select id="correct-answer" class="form-control">
-                        <option value="1">الخيار الأول</option>
-                        <option value="2">الخيار الثاني</option>
-                        <option value="3">الخيار الثالث</option>
-                        <option value="4">الخيار الرابع</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="question-category">تصنيف السؤال:</label>
-                    <input type="text" id="question-category" class="form-control" placeholder="مثال: فقه، حديث، عقيدة، إلخ">
-                </div>
-                
-                <div class="form-group">
-                    <label for="question-difficulty">مستوى الصعوبة:</label>
-                    <select id="question-difficulty" class="form-control">
-                        <option value="easy">سهل</option>
-                        <option value="medium">متوسط</option>
-                        <option value="hard">صعب</option>
-                    </select>
-                </div>
-                
-                <button class="btn btn-admin" id="add-question-btn">
-                    <i class="fas fa-plus-circle"></i> إضافة السؤال
-                </button>
-                <div class="loading-overlay" id="add-question-loading">
-                    <div class="spinner"></div>
-                    <div class="loading-text">جاري إضافة السؤال...</div>
+                <div class="admin-card">
+                    <h3><i class="fas fa-list"></i> الأسئلة الحالية</h3>
+                    <div class="admin-filters">
+                        <select id="filter-year" class="form-control">
+                            <option value="">جميع الصفوف</option>
+                            <option value="prep1">الصف الأول الإعدادي</option>
+                            <option value="prep2">الصف الثاني الإعدادي</option>
+                            <option value="prep3">الصف الثالث الإعدادي</option>
+                            <option value="first">الصف الأول الثانوي</option>
+                            <option value="second">الصف الثاني الثانوي</option>
+                            <option value="third">الصف الثالث الثانوي</option>
+                        </select>
+                        <select id="filter-section" class="form-control">
+                            <option value="">جميع الأقسام</option>
+                            <option value="scientific">علمي</option>
+                            <option value="literary">أدبي</option>
+                            <option value="arabic">عربي</option>
+                            <option value="islamic">شرعي</option>
+                        </select>
+                    </div>
+                    <div id="questions-list" class="questions-list">
+                        <!-- سيتم ملؤها ديناميكيًا -->
+                    </div>
                 </div>
             </div>
             
-            <div class="questions-list" id="questions-list">
-                <h3><i class="fas fa-list"></i> الإختبارات المضافة</h3>
-                <div class="admin-filters">
-                    <select id="admin-year-select" class="form-control">
-                        <option value="all">جميع الصفوف</option>
-                        <option value="prep1">الصف الأول الإعدادي</option>
-                        <option value="prep2">الصف الثاني الإعدادي</option>
-                        <option value="prep3">الصف الثالث الإعدادي</option>
-                        <option value="first">الصف الأول الثانوي</option>
-                        <option value="second">الصف الثاني الثانوي</option>
-                        <option value="third">الصف الثالث الثانوي</option>
-                    </select>
-                    <select id="admin-section-select" class="form-control">
-                        <option value="all">جميع الأقسام</option>
-                        <option value="scientific">علمي</option>
-                        <option value="literary">أدبي</option>
-                        <option value="arabic">عربي</option>
-                        <option value="islamic">شرعي</option>
-                    </select>
-                    <select id="admin-subject-select" class="form-control">
-                        <option value="all">جميع المواد</option>
-                    </select>
-                    <select id="admin-type-select" class="form-control">
-                        <option value="all">جميع الأنواع</option>
-                        <option value="mcq">اختيار من متعدد</option>
-                        <option value="true_false">صح أو خطأ</option>
-                    </select>
-                    <select id="admin-category-select" class="form-control">
-                        <option value="all">جميع التصنيفات</option>
-                    </select>
-                    <select id="admin-difficulty-select" class="form-control">
-                        <option value="all">جميع المستويات</option>
-                        <option value="easy">سهل</option>
-                        <option value="medium">متوسط</option>
-                        <option value="hard">صعب</option>
-                    </select>
-                </div>
-                <!-- قائمة الإختبارات ستظهر هنا -->
-            </div>
-        </div>
-        
-        <div class="admin-tab-content" id="settings-tab">
-            <div class="system-settings">
-                <h4><i class="fas fa-cog"></i> إعدادات النظام</h4>
-                
-                <div class="setting-item">
-                    <div class="switch-container">
-                        <label class="switch-label">حالة الاختبار:</label>
-                        <label class="admin-switch">
-                            <input type="checkbox" id="exam-toggle">
-                            <span class="admin-slider"></span>
-                        </label>
-                        <span id="exam-status-text" style="font-size: 14px;">نشط</span>
+            <!-- تبويب الإعدادات -->
+            <div id="settings-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-cog"></i> إعدادات النظام</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">مدة الاختبار (بالدقائق):</label>
+                        <input type="number" id="exam-time" class="form-control" min="1" max="120" value="10">
                     </div>
-                    <p style="font-size: 13px; color: rgba(255, 255, 255, 0.7); margin-top: 5px;">
-                        عند إيقاف التشغيل، لن يتمكن الطلاب من الوصول إلى الاختبارات
-                    </p>
+                    <div class="setting-item">
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="exam-status" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">تفعيل الاختبارات</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">كلمة المرور الإدارية:</label>
+                        <input type="password" id="admin-password-setting" class="form-control" value="gohary01010081147mo">
+                    </div>
+                    <button class="btn btn-admin" id="save-settings-btn">
+                        <i class="fas fa-save"></i> حفظ الإعدادات
+                    </button>
                 </div>
                 
-                <div class="setting-item">
-                    <label class="setting-label">وقت الاختبار (دقائق):</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" id="timer-setting" min="1" max="120" value="10" class="form-control">
-                        <button class="btn btn-admin btn-sm" id="update-timer-btn">
-                            <i class="fas fa-save"></i> حفظ
+                <div class="admin-card">
+                    <h3><i class="fab fa-telegram"></i> إعدادات التليجرام</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">توكن البوت:</label>
+                        <input type="text" id="telegram-bot-token" class="form-control" placeholder="أدخل توكن البوت">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">معرف الدردشة (Chat ID):</label>
+                        <input type="text" id="telegram-chat-id" class="form-control" placeholder="أدخل معرف الدردشة">
+                    </div>
+                    <button class="btn btn-admin" id="save-telegram-btn">
+                        <i class="fas fa-save"></i> حفظ إعدادات التليجرام
+                    </button>
+                </div>
+            </div>
+            
+            <!-- تبويب الإحصائيات -->
+            <div id="stats-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-chart-bar"></i> إحصائيات عامة</h3>
+                    <div class="admin-stats-grid">
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-value" id="total-questions">0</div>
+                            <div class="admin-stat-label">إجمالي الأسئلة</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-value" id="total-quizzes">0</div>
+                            <div class="admin-stat-label">إجمالي الاختبارات</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-value" id="avg-score">0%</div>
+                            <div class="admin-stat-label">متوسط النتائج</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-value" id="active-users">0</div>
+                            <div class="admin-stat-label">مستخدمين نشطين</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-chart-pie"></i> توزيع الأسئلة حسب الصف</h3>
+                    <canvas id="questions-by-year-chart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-history"></i> أحدث النتائج</h3>
+                    <div id="recent-results">
+                        <!-- سيتم ملؤها ديناميكيًا -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تبويب إدارة الأقسام -->
+            <div id="sections-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-layer-group"></i> إعدادات الأقسام الدراسية</h3>
+                    <div class="form-group">
+                        <label for="section-year">الصف الدراسي:</label>
+                        <select id="section-year" class="form-control">
+                            <option value="prep1">الصف الأول الإعدادي</option>
+                            <option value="prep2">الصف الثاني الإعدادي</option>
+                            <option value="prep3">الصف الثالث الإعدادي</option>
+                            <option value="first">الصف الأول الثانوي</option>
+                            <option value="second">الصف الثاني الثانوي</option>
+                            <option value="third">الصف الثالث الثانوي</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الأقسام المتاحة:</label>
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="section-scientific" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">القسم العلمي</span>
+                        </div>
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="section-literary" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">القسم الأدبي</span>
+                        </div>
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="section-arabic" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">القسم العربي</span>
+                        </div>
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="section-islamic" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">القسم الشرعي</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-admin" id="save-sections-btn">
+                        <i class="fas fa-save"></i> حفظ إعدادات الأقسام
+                    </button>
+                </div>
+            </div>
+            
+            <!-- تبويب إدارة الإعلانات -->
+            <div id="ads-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> إضافة إعلان جديد</h3>
+                    <div class="admin-form">
+                        <div class="form-group">
+                            <label for="ad-title">عنوان الإعلان:</label>
+                            <input type="text" id="ad-title" class="form-control" placeholder="عنوان الإعلان">
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-description">وصف الإعلان:</label>
+                            <textarea id="ad-description" class="form-control" rows="3" placeholder="وصف الإعلان"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-image">رابط الصورة (اختياري):</label>
+                            <input type="text" id="ad-image" class="form-control" placeholder="رابط صورة الإعلان">
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-whatsapp">رقم واتساب (اختياري):</label>
+                            <input type="text" id="ad-whatsapp" class="form-control" placeholder="رقم واتساب للتواصل">
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-status">حالة الإعلان:</label>
+                            <select id="ad-status" class="form-control">
+                                <option value="active">نشط</option>
+                                <option value="inactive">غير نشط</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-admin" id="add-ad-btn">
+                            <i class="fas fa-plus"></i> إضافة الإعلان
                         </button>
                     </div>
                 </div>
                 
-                <div class="setting-item">
-                    <label class="setting-label">تغيير كلمة المرور الإدارية:</label>
-                    <input type="password" id="admin-password-change" class="form-control" placeholder="كلمة المرور الجديدة">
-                    <button class="btn btn-admin" id="change-password-btn" style="margin-top: 10px;">
-                        <i class="fas fa-key"></i> تغيير كلمة المرور
+                <div class="admin-card">
+                    <h3><i class="fas fa-ad"></i> الإعلانات الحالية</h3>
+                    <div id="ads-list">
+                        <!-- سيتم ملؤها ديناميكيًا -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تبويب التحكم في الموقع -->
+            <div id="site-control-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-globe"></i> إعدادات الموقع</h3>
+                    <div class="form-group">
+                        <label for="site-title">عنوان الموقع:</label>
+                        <input type="text" id="site-title" class="form-control" value="إختبارات سلاح الأزهري">
+                    </div>
+                    <div class="form-group">
+                        <label for="site-description">وصف الموقع:</label>
+                        <textarea id="site-description" class="form-control" rows="2">نظام الاختبارات الإلكترونية</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-keywords">كلمات دلالية:</label>
+                        <textarea id="site-keywords" class="form-control" rows="2">اختبارات, الأزهر, تعليم, اختبارات إلكترونية, سلاح الأزهري</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-logo">شعار الموقع:</label>
+                        <input type="text" id="site-logo" class="form-control" value="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdyuIMWOk4qbKO_qCaKOHo859JMs3To_OJjpQ8u5fU0ULewA-AdNp7Izuv9PUOIOTGTUsNM6DTVVbRWKe2OEDTBcHnxOnOrCylsq_V3YhUFPqTkPJ7XOuzWzbCXKW-UnoLEwqsE8XjaHiWPZu2dC_pESia4uQOATzelupKDAUbuO1_jH2003wsgUO0PPiO/s1080/Selah%20Elazhary%20Transperant%20logo.png">
+                    </div>
+                    <div class="form-group">
+                        <div class="switch-container">
+                            <label class="admin-switch">
+                                <input type="checkbox" id="site-status" checked>
+                                <span class="admin-slider"></span>
+                            </label>
+                            <span class="switch-label">حالة الموقع (نشط/غير نشط)</span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="maintenance-message-container" style="display: none;">
+                        <label for="maintenance-message">رسالة الصيانة:</label>
+                        <textarea id="maintenance-message" class="form-control" rows="3">نظام الاختبارات تحت الصيانة، الرجاء المحاولة لاحقاً</textarea>
+                    </div>
+                    <button class="btn btn-admin" id="save-site-settings-btn">
+                        <i class="fas fa-save"></i> حفظ إعدادات الموقع
                     </button>
                 </div>
             </div>
             
-            <div class="system-settings">
-                <h4><i class="fas fa-book"></i> إدارة المواد الدراسية</h4>
-                <div id="subjects-list">
-                    <!-- قائمة المواد ستظهر هنا -->
-                </div>
-                <button class="btn btn-admin" id="add-new-subject-btn" style="margin-top: 15px;">
-                    <i class="fas fa-plus"></i> إضافة مادة جديدة
-                </button>
-            </div>
-        </div>
-        
-        <div class="admin-tab-content" id="stats-tab">
-            <div class="admin-stats">
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="total-questions">0</div>
-                    <div class="admin-stat-label">إجمالي الإختبارات</div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="mcq-count">0</div>
-                    <div class="admin-stat-label">اختيار من متعدد</div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="tf-count">0</div>
-                    <div class="admin-stat-label">صح أو خطأ</div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="users-count">0</div>
-                    <div class="admin-stat-label">المستخدمين</div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="subjects-count">0</div>
-                    <div class="admin-stat-label">المواد الدراسية</div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-value" id="results-count">0</div>
-                    <div class="admin-stat-label">نتائج الاختبارات</div>
-                </div>
-            </div>
-            
-            <div class="system-settings">
-                <h4><i class="fas fa-chart-line"></i> إحصائيات الاختبارات</h4>
-                <p style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">
-                    سيتم إضافة المزيد من الإحصائيات والرسوم البيانية في التحديثات القادمة
-                </p>
-            </div>
-        </div>
-        
-        <div class="admin-tab-content" id="users-tab">
-            <div class="system-settings">
-                <h4><i class="fas fa-users"></i> المستخدمون المسجلون</h4>
-                <div class="admin-filters">
-                    <select id="user-type-filter" class="form-control">
-                        <option value="all">جميع المستخدمين</option>
-                        <option value="student">طلاب</option>
-                        <option value="teacher">معلمون</option>
-                        <option value="admin">مشرفون</option>
-                    </select>
-                    <input type="text" id="user-search" class="form-control" placeholder="بحث بالاسم أو البريد الإلكتروني">
-                </div>
-                <div id="users-list">
-                    <!-- قائمة المستخدمين ستظهر هنا -->
-                </div>
-            </div>
-            
-            <div class="system-settings">
-                <h4><i class="fas fa-user-plus"></i> إضافة مستخدم جديد</h4>
-                <div class="admin-form">
+            <!-- تبويب التعديلات العامة -->
+            <div id="edits-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-book"></i> إدارة المواد الدراسية</h3>
                     <div class="form-group">
-                        <label for="new-user-name">الاسم الكامل:</label>
-                        <input type="text" id="new-user-name" class="form-control" placeholder="أدخل الاسم الكامل">
+                        <label for="edit-subject-name">اسم المادة:</label>
+                        <input type="text" id="edit-subject-name" class="form-control" placeholder="اسم المادة">
                     </div>
                     <div class="form-group">
-                        <label for="new-user-email">البريد الإلكتروني:</label>
-                        <input type="email" id="new-user-email" class="form-control" placeholder="أدخل البريد الإلكتروني">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-user-phone">رقم الهاتف:</label>
-                        <input type="tel" id="new-user-phone" class="form-control" placeholder="أدخل رقم الهاتف">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-user-password">كلمة المرور:</label>
-                        <input type="password" id="new-user-password" class="form-control" placeholder="أدخل كلمة المرور">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-user-role">الدور:</label>
-                        <select id="new-user-role" class="form-control">
-                            <option value="student">طالب</option>
-                            <option value="teacher">معلم</option>
-                            <option value="admin">مشرف</option>
+                        <label for="edit-subject-year">الصف الدراسي:</label>
+                        <select id="edit-subject-year" class="form-control">
+                            <option value="prep1">الصف الأول الإعدادي</option>
+                            <option value="prep2">الصف الثاني الإعدادي</option>
+                            <option value="prep3">الصف الثالث الإعدادي</option>
+                            <option value="first">الصف الأول الثانوي</option>
+                            <option value="second">الصف الثاني الثانوي</option>
+                            <option value="third">الصف الثالث الثانوي</option>
                         </select>
                     </div>
-                    <button class="btn btn-admin" id="add-user-btn">
-                        <i class="fas fa-plus-circle"></i> إضافة مستخدم
+                    <div class="form-group">
+                        <label for="edit-subject-section">القسم:</label>
+                        <select id="edit-subject-section" class="form-control">
+                            <option value="scientific">علمي</option>
+                            <option value="literary">أدبي</option>
+                            <option value="arabic">عربي</option>
+                            <option value="islamic">شرعي</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-subject-icon">أيقونة المادة:</label>
+                        <select id="edit-subject-icon" class="form-control">
+                            <option value="fa-atom">علوم (ذرة)</option>
+                            <option value="fa-flask">كيمياء</option>
+                            <option value="fa-calculator">رياضيات</option>
+                            <option value="fa-dna">أحياء</option>
+                            <option value="fa-language">لغة عربية</option>
+                            <option value="fa-book-open">أدب</option>
+                            <option value="fa-pray">فقه</option>
+                            <option value="fa-quran">قرآن</option>
+                            <option value="fa-hands-praying">حديث</option>
+                            <option value="fa-mosque">توحيد</option>
+                            <option value="fa-globe">جغرافيا</option>
+                            <option value="fa-history">تاريخ</option>
+                            <option value="fa-brain">منطق</option>
+                            <option value="fa-scroll">بلاغة</option>
+                            <option value="fa-comment">إنشاء</option>
+                            <option value="fa-infinity">هندسة</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-admin" id="add-subject-btn">
+                        <i class="fas fa-plus"></i> إضافة مادة
                     </button>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>المواد الحالية:</label>
+                        <div id="subjects-list">
+                            <!-- سيتم ملؤها ديناميكيًا -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1518,52 +1887,6 @@
         </div>
     </div>
     
-    <!-- نافذة إضافة مادة جديدة -->
-    <div class="password-modal" id="subject-modal" style="display: none;">
-        <div class="modal-box">
-            <h3><i class="fas fa-book"></i> إضافة مادة جديدة</h3>
-            <input type="text" class="form-control" id="new-subject-name" placeholder="اسم المادة">
-            <div class="form-group" style="text-align: right; margin-top: 15px;">
-                <label for="new-subject-section">القسم:</label>
-                <select id="new-subject-section" class="form-control">
-                    <option value="scientific">علمي</option>
-                    <option value="literary">أدبي</option>
-                    <option value="arabic">عربي</option>
-                    <option value="islamic">شرعي</option>
-                </select>
-            </div>
-            <div class="form-group" style="text-align: right; margin-top: 15px;">
-                <label for="new-subject-icon">أيقونة المادة:</label>
-                <select id="new-subject-icon" class="form-control">
-                    <option value="fa-atom">علوم (ذرة)</option>
-                    <option value="fa-flask">كيمياء</option>
-                    <option value="fa-calculator">رياضيات</option>
-                    <option value="fa-dna">أحياء</option>
-                    <option value="fa-language">لغة عربية</option>
-                    <option value="fa-book-open">أدب</option>
-                    <option value="fa-pray">فقه</option>
-                    <option value="fa-quran">قرآن</option>
-                    <option value="fa-hands-praying">حديث</option>
-                    <option value="fa-mosque">توحيد</option>
-                    <option value="fa-globe">جغرافيا</option>
-                    <option value="fa-history">تاريخ</option>
-                    <option value="fa-brain">منطق</option>
-                    <option value="fa-scroll">بلاغة</option>
-                    <option value="fa-comment">إنشاء</option>
-                    <option value="fa-infinity">هندسة</option>
-                </select>
-            </div>
-            <div class="modal-buttons" style="margin-top: 20px;">
-                <button class="btn btn-admin" id="add-subject-submit">
-                    <i class="fas fa-plus"></i> إضافة
-                </button>
-                <button class="btn btn-secondary" id="cancel-add-subject">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- طبقة التعتيم -->
     <div class="overlay" id="overlay"></div>
     
@@ -1571,9 +1894,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        // Your web app's Firebase configuration
+        // تهيئة Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBMJe0CVmxCrFthFmJEs5W_p1x3AFpFmHQ",
             authDomain: "moaz-a8190.firebaseapp.com",
@@ -1596,22 +1921,43 @@
         let questions = [];
         let userAnswers = [];
         let clickCount = 0;
-        let adminPassword = localStorage.getItem('adminPassword') || "gohary01010081147mo"; // كلمة المرور الإدارية
+        let adminPassword = localStorage.getItem('adminPassword') || "gohary01010081147mo";
         let categories = new Set();
         let quizStartTime;
         let timerInterval;
-        let timeLeft = 600; // 10 دقائق بالثواني
+        let timeLeft = 600;
         let selectedYear = '';
         let selectedSection = '';
         let selectedSubject = '';
         let subjects = [];
         let examActive = true;
-        let defaultExamTime = 10; // دقائق
+        let defaultExamTime = 10;
         let currentUser = null;
         let savedState = JSON.parse(localStorage.getItem('quizState')) || {};
-        
+        let telegramBotToken = localStorage.getItem('telegramBotToken') || '';
+        let telegramChatId = localStorage.getItem('telegramChatId') || '';
+        let sectionsConfig = {
+            prep1: ['arabic', 'islamic'],
+            prep2: ['arabic', 'islamic'],
+            prep3: ['arabic', 'islamic'],
+            first: ['scientific', 'literary'],
+            second: ['scientific', 'literary'],
+            third: ['scientific', 'literary']
+        };
+        let activeAd = null;
+        let siteSettings = {
+            title: "إختبارات سلاح الأزهري",
+            description: "نظام الاختبارات الإلكترونية",
+            keywords: "اختبارات, الأزهر, تعليم, اختبارات إلكترونية, سلاح الأزهري",
+            logo: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdyuIMWOk4qbKO_qCaKOHo859JMs3To_OJjpQ8u5fU0ULewA-AdNp7Izuv9PUOIOTGTUsNM6DTVVbRWKe2OEDTBcHnxOnOrCylsq_V3YhUFPqTkPJ7XOuzWzbCXKW-UnoLEwqsE8XjaHiWPZu2dC_pESia4uQOATzelupKDAUbuO1_jH2003wsgUO0PPiO/s1080/Selah%20Elazhary%20Transperant%20logo.png",
+            active: true,
+            maintenanceMessage: "نظام الاختبارات تحت الصيانة، الرجاء المحاولة لاحقاً"
+        };
+
         // عناصر DOM
         const elements = {
+            splashScreen: document.getElementById('splash-screen'),
+            splashProgress: document.getElementById('splash-progress'),
             quizContainer: document.getElementById('quiz-container'),
             questionContainer: document.getElementById('question-container'),
             resultsContainer: document.getElementById('results-container'),
@@ -1634,200 +1980,431 @@
             passwordCancel: document.getElementById('password-cancel'),
             passwordError: document.getElementById('password-error'),
             quizLoading: document.getElementById('quiz-loading'),
-            addQuestionLoading: document.getElementById('add-question-loading'),
             categoryFilter: document.getElementById('category-filter'),
             categorySelect: document.getElementById('category-select'),
             timerDisplay: document.getElementById('timer'),
-            totalQuestionsDisplay: document.getElementById('total-questions'),
-            mcqCountDisplay: document.getElementById('mcq-count'),
-            tfCountDisplay: document.getElementById('tf-count'),
-            usersCountDisplay: document.getElementById('users-count'),
-            subjectsCountDisplay: document.getElementById('subjects-count'),
-            resultsCountDisplay: document.getElementById('results-count'),
-            adminCategorySelect: document.getElementById('admin-category-select'),
-            adminTypeSelect: document.getElementById('admin-type-select'),
-            adminYearSelect: document.getElementById('admin-year-select'),
-            adminSectionSelect: document.getElementById('admin-section-select'),
-            adminSubjectSelect: document.getElementById('admin-subject-select'),
-            adminDifficultySelect: document.getElementById('admin-difficulty-select'),
             overlay: document.getElementById('overlay'),
             yearSelectionContainer: document.getElementById('year-selection-container'),
             sectionSelectionContainer: document.getElementById('section-selection-container'),
             subjectSelectionContainer: document.getElementById('subject-selection-container'),
             yearCards: document.querySelectorAll('.year-card'),
-            sectionCards: document.querySelectorAll('.section-card'),
-            examToggle: document.getElementById('exam-toggle'),
-            examStatusText: document.getElementById('exam-status-text'),
-            timerSetting: document.getElementById('timer-setting'),
-            updateTimerBtn: document.getElementById('update-timer-btn'),
-            questionSubjectSelect: document.getElementById('question-subject'),
-            addSubjectBtn: document.getElementById('add-subject-btn'),
-            subjectModal: document.getElementById('subject-modal'),
-            newSubjectName: document.getElementById('new-subject-name'),
-            newSubjectSection: document.getElementById('new-subject-section'),
-            newSubjectIcon: document.getElementById('new-subject-icon'),
-            addSubjectSubmit: document.getElementById('add-subject-submit'),
-            cancelAddSubject: document.getElementById('cancel-add-subject'),
             backBtn: document.getElementById('back-btn'),
-            adminTabs: document.querySelectorAll('.admin-tab'),
+            adminTabs: document.querySelectorAll('.admin-tab-btn'),
             adminTabContents: document.querySelectorAll('.admin-tab-content'),
-            changePasswordBtn: document.getElementById('change-password-btn'),
-            adminPasswordChange: document.getElementById('admin-password-change'),
-            subjectsList: document.getElementById('subjects-list'),
-            addNewSubjectBtn: document.getElementById('add-new-subject-btn'),
-            userProfile: document.getElementById('user-profile'),
-            loginBtn: document.getElementById('login-btn'),
-            registerBtn: document.getElementById('register-btn'),
-            loginModal: document.getElementById('login-modal'),
-            registerModal: document.getElementById('register-modal'),
-            loginEmail: document.getElementById('login-email'),
-            loginPassword: document.getElementById('login-password'),
-            loginError: document.getElementById('login-error'),
-            showRegister: document.getElementById('show-register'),
-            showLogin: document.getElementById('show-login'),
-            registerName: document.getElementById('register-name'),
-            registerEmail: document.getElementById('register-email'),
-            registerPassword: document.getElementById('register-password'),
-            registerConfirmPassword: document.getElementById('register-confirm-password'),
-            registerSubmit: document.getElementById('register-submit'),
-            registerError: document.getElementById('register-error'),
-            loginAsGuest: document.getElementById('login-as-guest'),
-            forgotPassword: document.getElementById('forgot-password'),
-            usersList: document.getElementById('users-list'),
-            userTypeFilter: document.getElementById('user-type-filter'),
-            userSearch: document.getElementById('user-search'),
-            addUserBtn: document.getElementById('add-user-btn'),
-            newUserName: document.getElementById('new-user-name'),
-            newUserEmail: document.getElementById('new-user-email'),
-            newUserPhone: document.getElementById('new-user-phone'),
-            newUserPassword: document.getElementById('new-user-password'),
-            newUserRole: document.getElementById('new-user-role'),
-            loginMethod: document.getElementById('login-method'),
-            loginPhone: document.getElementById('login-phone'),
-            loginPhonePassword: document.getElementById('login-phone-password'),
-            emailLoginFields: document.getElementById('email-login-fields'),
-            phoneLoginFields: document.getElementById('phone-login-fields'),
-            registerMethod: document.getElementById('register-method'),
-            registerPhoneName: document.getElementById('register-phone-name'),
-            registerPhone: document.getElementById('register-phone'),
-            registerPhonePassword: document.getElementById('register-phone-password'),
-            registerPhoneConfirmPassword: document.getElementById('register-phone-confirm-password'),
-            emailRegisterFields: document.getElementById('email-register-fields'),
-            phoneRegisterFields: document.getElementById('phone-register-fields'),
-            rememberMe: document.getElementById('remember-me'),
+            adContainer: document.getElementById('ad-container'),
             
-            // عناصر لوحة التحكم
-            questionTypeSelect: document.getElementById('question-type'),
-            questionYearSelect: document.getElementById('question-year'),
-            questionSectionSelect: document.getElementById('question-section'),
-            questionText: document.getElementById('question-text'),
+            // عناصر لوحة الإدارة
+            questionType: document.getElementById('question-type'),
             mcqOptions: document.getElementById('mcq-options'),
-            correctAnswerSelect: document.getElementById('correct-answer'),
-            questionCategory: document.getElementById('question-category'),
-            questionDifficulty: document.getElementById('question-difficulty'),
+            truefalseOptions: document.getElementById('truefalse-options'),
             addQuestionBtn: document.getElementById('add-question-btn'),
-            questionsList: document.getElementById('questions-list')
+            questionsList: document.getElementById('questions-list'),
+            filterYear: document.getElementById('filter-year'),
+            filterSection: document.getElementById('filter-section'),
+            examTime: document.getElementById('exam-time'),
+            examStatus: document.getElementById('exam-status'),
+            adminPasswordSetting: document.getElementById('admin-password-setting'),
+            saveSettingsBtn: document.getElementById('save-settings-btn'),
+            telegramBotToken: document.getElementById('telegram-bot-token'),
+            telegramChatId: document.getElementById('telegram-chat-id'),
+            saveTelegramBtn: document.getElementById('save-telegram-btn'),
+            totalQuestions: document.getElementById('total-questions'),
+            totalQuizzes: document.getElementById('total-quizzes'),
+            avgScore: document.getElementById('avg-score'),
+            activeUsers: document.getElementById('active-users'),
+            recentResults: document.getElementById('recent-results'),
+            sectionYear: document.getElementById('section-year'),
+            sectionScientific: document.getElementById('section-scientific'),
+            sectionLiterary: document.getElementById('section-literary'),
+            sectionArabic: document.getElementById('section-arabic'),
+            sectionIslamic: document.getElementById('section-islamic'),
+            saveSectionsBtn: document.getElementById('save-sections-btn'),
+            adTitle: document.getElementById('ad-title'),
+            adDescription: document.getElementById('ad-description'),
+            adImage: document.getElementById('ad-image'),
+            adWhatsapp: document.getElementById('ad-whatsapp'),
+            adStatus: document.getElementById('ad-status'),
+            addAdBtn: document.getElementById('add-ad-btn'),
+            adsList: document.getElementById('ads-list'),
+            siteTitle: document.getElementById('site-title'),
+            siteDescription: document.getElementById('site-description'),
+            siteKeywords: document.getElementById('site-keywords'),
+            siteLogo: document.getElementById('site-logo'),
+            siteStatus: document.getElementById('site-status'),
+            maintenanceMessage: document.getElementById('maintenance-message'),
+            maintenanceMessageContainer: document.getElementById('maintenance-message-container'),
+            saveSiteSettingsBtn: document.getElementById('save-site-settings-btn'),
+            editSubjectName: document.getElementById('edit-subject-name'),
+            editSubjectYear: document.getElementById('edit-subject-year'),
+            editSubjectSection: document.getElementById('edit-subject-section'),
+            editSubjectIcon: document.getElementById('edit-subject-icon'),
+            addSubjectBtn: document.getElementById('add-subject-btn'),
+            subjectsList: document.getElementById('subjects-list')
         };
 
-        // المواد الدراسية لكل قسم
-        const allSubjects = {
-            scientific: [
-                { name: "الرياضيات", icon: "fa-calculator" },
-                { name: "الكيمياء", icon: "fa-flask" },
-                { name: "الفيزياء", icon: "fa-atom" },
-                { name: "الأحياء", icon: "fa-dna" },
-                { name: "اللغة العربية", icon: "fa-language" }
-            ],
-            literary: [
-                { name: "اللغة العربية", icon: "fa-language" },
-                { name: "الأدب", icon: "fa-book-open" },
-                { name: "الفقه", icon: "fa-pray" },
-                { name: "القرآن الكريم", icon: "fa-quran" },
-                { name: "الحديث", icon: "fa-hands-praying" },
-                { name: "التوحيد", icon: "fa-mosque" },
-                { name: "الجغرافيا", icon: "fa-globe" },
-                { name: "التاريخ", icon: "fa-history" },
-                { name: "المنطق", icon: "fa-brain" },
-                { name: "البلاغة", icon: "fa-scroll" },
-                { name: "الإنشاء", icon: "fa-comment" },
-                { name: "الهندسة", icon: "fa-infinity" }
-            ],
-            arabic: [
-                { name: "اللغة العربية", icon: "fa-language" },
-                { name: "النحو", icon: "fa-book" },
-                { name: "الصرف", icon: "fa-font" },
-                { name: "الأدب", icon: "fa-book-open" },
-                { name: "البلاغة", icon: "fa-scroll" }
-            ],
-            islamic: [
-                { name: "الفقه", icon: "fa-pray" },
-                { name: "القرآن الكريم", icon: "fa-quran" },
-                { name: "الحديث", icon: "fa-hands-praying" },
-                { name: "التوحيد", icon: "fa-mosque" },
-                { name: "السيرة النبوية", icon: "fa-history" }
-            ]
-        };
-        
         // تهيئة التطبيق
         function initApp() {
+            simulateLoading();
             setupEventListeners();
             loadInitialSubjects();
             checkExamStatus();
-            checkAuthState();
             restoreSavedState();
+            loadTelegramSettings();
+            loadSectionsConfig();
+            loadActiveAd();
+            loadSiteSettings();
+            loadAdminData();
             
-            // إضافة مستمع لحفظ الحالة عند إغلاق الصفحة
             window.addEventListener('beforeunload', saveCurrentState);
-            
-            // تحديث قائمة الأقسام بناءً على الصف المختار في لوحة التحكم
-            elements.questionYearSelect.addEventListener('change', updateSectionSelect);
         }
         
-        // تحديث قائمة الأقسام بناءً على الصف المختار
-        function updateSectionSelect() {
-            const year = elements.questionYearSelect.value;
-            const sectionSelect = elements.questionSectionSelect;
+        // تحميل إعدادات الموقع
+        function loadSiteSettings() {
+            const settingsRef = database.ref('siteSettings');
+            settingsRef.once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    siteSettings = snapshot.val();
+                    document.title = siteSettings.title;
+                    
+                    // تحديث واجهة الإدارة
+                    if (elements.siteTitle) {
+                        elements.siteTitle.value = siteSettings.title;
+                        elements.siteDescription.value = siteSettings.description;
+                        elements.siteKeywords.value = siteSettings.keywords;
+                        elements.siteLogo.value = siteSettings.logo;
+                        elements.siteStatus.checked = siteSettings.active;
+                        elements.maintenanceMessage.value = siteSettings.maintenanceMessage;
+                        elements.maintenanceMessageContainer.style.display = siteSettings.active ? 'none' : 'block';
+                    }
+                } else {
+                    settingsRef.set(siteSettings);
+                }
+            });
+        }
+        
+        // تحميل بيانات لوحة الإدارة
+        function loadAdminData() {
+            loadQuestionsForAdmin();
+            loadStats();
+            loadAds();
+            loadSubjectsForAdmin();
+        }
+        
+        // تحميل الأسئلة لوحة الإدارة
+        function loadQuestionsForAdmin() {
+            const questionsRef = database.ref('questions');
+            questionsRef.on('value', (snapshot) => {
+                elements.questionsList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const question = childSnapshot.val();
+                    question.id = childSnapshot.key;
+                    
+                    const questionItem = document.createElement('div');
+                    questionItem.className = 'question-item';
+                    questionItem.innerHTML = `
+                        <h4>${question.text}</h4>
+                        <div class="question-meta">
+                            <span><i class="fas fa-graduation-cap"></i> ${getYearText(question.year)}</span>
+                            <span><i class="fas fa-layer-group"></i> ${getSectionText(question.section)}</span>
+                            <span><i class="fas fa-book"></i> ${question.subject || 'عام'}</span>
+                            <span><i class="fas fa-star"></i> ${getDifficultyText(question.difficulty)}</span>
+                        </div>
+                        <div class="options-list">
+                            ${question.type === 'mcq' ? `
+                                <div class="option-item ${question.correctAnswer === '1' ? 'correct-option' : ''}">1. ${question.option1}</div>
+                                <div class="option-item ${question.correctAnswer === '2' ? 'correct-option' : ''}">2. ${question.option2}</div>
+                                ${question.option3 ? `<div class="option-item ${question.correctAnswer === '3' ? 'correct-option' : ''}">3. ${question.option3}</div>` : ''}
+                                ${question.option4 ? `<div class="option-item ${question.correctAnswer === '4' ? 'correct-option' : ''}">4. ${question.option4}</div>` : ''}
+                            ` : `
+                                <div class="option-item ${question.correctAnswer === 'true' ? 'correct-option' : ''}">${question.correctAnswer === 'true' ? 'صح' : 'خطأ'}</div>
+                            `}
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-sm btn-danger" onclick="deleteQuestion('${question.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.questionsList.appendChild(questionItem);
+                });
+            });
+        }
+        
+        // تحميل الإحصائيات
+        function loadStats() {
+            // إحصائيات الأسئلة
+            const questionsRef = database.ref('questions');
+            questionsRef.once('value', (snapshot) => {
+                elements.totalQuestions.textContent = snapshot.numChildren();
+            });
             
-            sectionSelect.innerHTML = '';
-            
-            if (year === 'prep1' || year === 'prep2' || year === 'prep3') {
-                // الأقسام للمرحلة الإعدادية
-                sectionSelect.innerHTML = `
-                    <option value="arabic">عربي</option>
-                    <option value="islamic">شرعي</option>
-                `;
-            } else {
-                // الأقسام للمرحلة الثانوية
-                sectionSelect.innerHTML = `
-                    <option value="scientific">علمي</option>
-                    <option value="literary">أدبي</option>
-                `;
+            // إحصائيات النتائج
+            const resultsRef = database.ref('quizResults');
+            resultsRef.once('value', (snapshot) => {
+                elements.totalQuizzes.textContent = snapshot.numChildren();
+                
+                let totalScore = 0;
+                let count = 0;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const result = childSnapshot.val();
+                    totalScore += result.percentage;
+                    count++;
+                });
+                
+                const avg = count > 0 ? Math.round(totalScore / count) : 0;
+                elements.avgScore.textContent = `${avg}%`;
+                
+                // عرض أحدث النتائج
+                elements.recentResults.innerHTML = '';
+                const recentResults = [];
+                
+                snapshot.forEach((childSnapshot) => {
+                    recentResults.push(childSnapshot.val());
+                });
+                
+                // ترتيب النتائج من الأحدث إلى الأقدم
+                recentResults.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                // عرض آخر 5 نتائج
+                recentResults.slice(0, 5).forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'question-item';
+                    resultItem.innerHTML = `
+                        <h4>${result.userName}</h4>
+                        <div class="question-meta">
+                            <span><i class="fas fa-graduation-cap"></i> ${getYearText(result.year)}</span>
+                            <span><i class="fas fa-layer-group"></i> ${getSectionText(result.section)}</span>
+                            <span><i class="fas fa-book"></i> ${result.subject || 'عام'}</span>
+                            <span><i class="fas fa-chart-line"></i> ${result.percentage}%</span>
+                            <span><i class="fas fa-clock"></i> ${result.timeTaken}</span>
+                        </div>
+                    `;
+                    
+                    elements.recentResults.appendChild(resultItem);
+                });
+            });
+        }
+        
+        // تحميل الإعلانات
+        function loadAds() {
+            const adsRef = database.ref('ads');
+            adsRef.on('value', (snapshot) => {
+                elements.adsList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const ad = childSnapshot.val();
+                    ad.id = childSnapshot.key;
+                    
+                    const adItem = document.createElement('div');
+                    adItem.className = 'question-item';
+                    adItem.innerHTML = `
+                        <h4>${ad.title}</h4>
+                        <div class="question-meta">
+                            <span><i class="fas fa-circle" style="color: ${ad.status === 'active' ? '#00b894' : '#d63031'}"></i> ${ad.status === 'active' ? 'نشط' : 'غير نشط'}</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(ad.createdAt).toLocaleDateString('ar-EG')}</span>
+                        </div>
+                        <p>${ad.description}</p>
+                        <div class="question-actions">
+                            <button class="btn btn-sm btn-danger" onclick="deleteAd('${ad.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                            <button class="btn btn-sm btn-admin" onclick="toggleAdStatus('${ad.id}', '${ad.status}')">
+                                <i class="fas fa-power-off"></i> ${ad.status === 'active' ? 'إيقاف' : 'تفعيل'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.adsList.appendChild(adItem);
+                });
+            });
+        }
+        
+        // تحميل المواد للإدارة
+        function loadSubjectsForAdmin() {
+            const subjectsRef = database.ref('subjects');
+            subjectsRef.on('value', (snapshot) => {
+                elements.subjectsList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const subject = childSnapshot.val();
+                    subject.id = childSnapshot.key;
+                    
+                    const subjectItem = document.createElement('div');
+                    subjectItem.className = 'question-item';
+                    subjectItem.innerHTML = `
+                        <h4><i class="fas ${subject.icon}"></i> ${subject.name}</h4>
+                        <div class="question-meta">
+                            <span><i class="fas fa-graduation-cap"></i> ${getYearText(subject.year)}</span>
+                            <span><i class="fas fa-layer-group"></i> ${getSectionText(subject.section)}</span>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-sm btn-danger" onclick="deleteSubject('${subject.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.subjectsList.appendChild(subjectItem);
+                });
+            });
+        }
+        
+        // حذف سؤال
+        function deleteQuestion(questionId) {
+            if (confirm('هل أنت متأكد من حذف هذا السؤال؟')) {
+                database.ref('questions/' + questionId).remove()
+                    .then(() => {
+                        alert('تم حذف السؤال بنجاح');
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حذف السؤال: ' + error.message);
+                    });
             }
+        }
+        
+        // حذف إعلان
+        function deleteAd(adId) {
+            if (confirm('هل أنت متأكد من حذف هذا الإعلان؟')) {
+                database.ref('ads/' + adId).remove()
+                    .then(() => {
+                        alert('تم حذف الإعلان بنجاح');
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حذف الإعلان: ' + error.message);
+                    });
+            }
+        }
+        
+        // تبديل حالة الإعلان
+        function toggleAdStatus(adId, currentStatus) {
+            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            
+            database.ref('ads/' + adId + '/status').set(newStatus)
+                .then(() => {
+                    alert(`تم ${newStatus === 'active' ? 'تفعيل' : 'إيقاف'} الإعلان بنجاح`);
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء تغيير حالة الإعلان: ' + error.message);
+                });
+        }
+        
+        // حذف مادة
+        function deleteSubject(subjectId) {
+            if (confirm('هل أنت متأكد من حذف هذه المادة؟')) {
+                database.ref('subjects/' + subjectId).remove()
+                    .then(() => {
+                        alert('تم حذف المادة بنجاح');
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حذف المادة: ' + error.message);
+                    });
+            }
+        }
+        
+        // محاكاة عملية التحميل
+        function simulateLoading() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        elements.splashScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            elements.splashScreen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+                elements.splashProgress.style.width = `${progress}%`;
+            }, 200);
+        }
+        
+        // تحميل الإعلان النشط
+        function loadActiveAd() {
+            const adsRef = database.ref('ads');
+            adsRef.orderByChild('status').equalTo('active').limitToLast(1).once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        activeAd = childSnapshot.val();
+                        showAd(activeAd);
+                    });
+                }
+            });
+        }
+        
+        // عرض الإعلان
+        function showAd(ad) {
+            if (!ad) return;
+            
+            const adHtml = `
+                <div class="ad-container">
+                    ${ad.image ? `<img src="${ad.image}" alt="${ad.title}" class="ad-image">` : ''}
+                    <h3 class="ad-title">${ad.title}</h3>
+                    <p class="ad-description">${ad.description}</p>
+                    ${ad.whatsapp ? `
+                        <a href="https://wa.me/${ad.whatsapp}" class="ad-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+            
+            elements.adContainer.innerHTML = adHtml;
+            elements.adContainer.style.display = 'block';
+        }
+        
+        // تحميل إعدادات التليجرام
+        function loadTelegramSettings() {
+            if (elements.telegramBotToken) {
+                elements.telegramBotToken.value = telegramBotToken;
+                elements.telegramChatId.value = telegramChatId;
+            }
+        }
+        
+        // تحميل تكوين الأقسام من Firebase
+        function loadSectionsConfig() {
+            const sectionsRef = database.ref('sectionsConfig');
+            sectionsRef.once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    sectionsConfig = snapshot.val();
+                    
+                    // تحديث واجهة الإدارة
+                    if (elements.sectionYear) {
+                        updateSectionsUI();
+                    }
+                } else {
+                    sectionsRef.set(sectionsConfig);
+                }
+            });
+        }
+        
+        // تحديث واجهة إعدادات الأقسام
+        function updateSectionsUI() {
+            elements.sectionYear.addEventListener('change', function() {
+                const year = this.value;
+                elements.sectionScientific.checked = sectionsConfig[year].includes('scientific');
+                elements.sectionLiterary.checked = sectionsConfig[year].includes('literary');
+                elements.sectionArabic.checked = sectionsConfig[year].includes('arabic');
+                elements.sectionIslamic.checked = sectionsConfig[year].includes('islamic');
+            });
+            
+            // تعيين القيم الافتراضية
+            elements.sectionScientific.checked = sectionsConfig.prep1.includes('scientific');
+            elements.sectionLiterary.checked = sectionsConfig.prep1.includes('literary');
+            elements.sectionArabic.checked = sectionsConfig.prep1.includes('arabic');
+            elements.sectionIslamic.checked = sectionsConfig.prep1.includes('islamic');
         }
         
         // استعادة الحالة المحفوظة
         function restoreSavedState() {
-            if (savedState.user) {
-                currentUser = savedState.user;
-                updateUserUI();
-            }
-            
             if (savedState.selectedYear) {
                 selectedYear = savedState.selectedYear;
                 const yearCard = document.querySelector(`.year-card[data-year="${selectedYear}"]`);
                 if (yearCard) yearCard.click();
-            }
-            
-            if (savedState.selectedSection) {
-                selectedSection = savedState.selectedSection;
-                const sectionCard = document.querySelector(`.section-card[data-section="${selectedSection}"]`);
-                if (sectionCard) sectionCard.click();
-            }
-            
-            if (savedState.selectedSubject) {
-                selectedSubject = savedState.selectedSubject;
-                const subjectCard = document.querySelector(`.subject-card[data-subject="${selectedSubject}"]`);
-                if (subjectCard) subjectCard.click();
             }
         }
         
@@ -1839,31 +2416,11 @@
                 selectedSection: selectedSection,
                 selectedSubject: selectedSubject
             };
-            
             localStorage.setItem('quizState', JSON.stringify(state));
         }
         
         // إعداد مستمعي الأحداث
         function setupEventListeners() {
-            // استجابة لتغيير نوع السؤال
-            elements.questionTypeSelect.addEventListener('change', function() {
-                if (this.value === 'true_false') {
-                    elements.mcqOptions.style.display = 'none';
-                    elements.correctAnswerSelect.innerHTML = `
-                        <option value="true">صح</option>
-                        <option value="false">خطأ</option>
-                    `;
-                } else {
-                    elements.mcqOptions.style.display = 'block';
-                    elements.correctAnswerSelect.innerHTML = `
-                        <option value="1">الخيار الأول</option>
-                        <option value="2">الخيار الثاني</option>
-                        <option value="3">الخيار الثالث</option>
-                        <option value="4">الخيار الرابع</option>
-                    `;
-                }
-            });
-            
             // اختيار الصف الدراسي
             elements.yearCards.forEach(card => {
                 card.addEventListener('click', function() {
@@ -1872,31 +2429,10 @@
                     elements.sectionSelectionContainer.style.display = 'flex';
                     elements.backBtn.style.display = 'flex';
                     
-                    // تحديث عنوان الاختبار
                     const yearText = getYearText(selectedYear);
                     elements.quizTitle.textContent = `اختبار إختبارات سلاح الأزهري - ${yearText}`;
                     
-                    // تحميل الأقسام المناسبة للصف المختار
                     loadSections(selectedYear);
-                    
-                    saveCurrentState();
-                });
-            });
-            
-            // اختيار القسم
-            elements.sectionCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    elements.sectionCards.forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedSection = this.dataset.section;
-                    
-                    // تحديث عنوان الاختبار
-                    const sectionText = getSectionText(selectedSection);
-                    elements.quizTitle.textContent += ` - ${sectionText}`;
-                    
-                    // تحميل المواد الخاصة بهذا القسم
-                    loadSubjects(selectedSection);
-                    
                     saveCurrentState();
                 });
             });
@@ -1922,11 +2458,6 @@
                 }
                 
                 saveCurrentState();
-            });
-            
-            // تصفية الإختبارات حسب التصنيف
-            elements.categorySelect.addEventListener('change', function() {
-                filterQuestionsByCategory(this.value);
             });
             
             // الانتقال إلى السؤال التالي
@@ -1975,31 +2506,10 @@
                 }
             });
             
-            // تصفية الإختبارات في لوحة التحكم
-            elements.adminCategorySelect.addEventListener('change', loadAdminQuestions);
-            elements.adminTypeSelect.addEventListener('change', loadAdminQuestions);
-            elements.adminYearSelect.addEventListener('change', loadAdminQuestions);
-            elements.adminSectionSelect.addEventListener('change', loadAdminQuestions);
-            elements.adminSubjectSelect.addEventListener('change', loadAdminQuestions);
-            elements.adminDifficultySelect.addEventListener('change', loadAdminQuestions);
-            
-            // تحديث حالة الاختبار
-            elements.examToggle.addEventListener('change', updateExamStatus);
-            
-            // تحديث وقت الاختبار
-            elements.updateTimerBtn.addEventListener('click', updateExamTime);
-            
-            // فتح نافذة إضافة مادة جديدة
-            elements.addSubjectBtn.addEventListener('click', showAddSubjectModal);
-            elements.addNewSubjectBtn.addEventListener('click', showAddSubjectModal);
-            
-            // إغلاق نافذة إضافة مادة
-            elements.cancelAddSubject.addEventListener('click', function() {
-                elements.subjectModal.style.display = 'none';
+            // تصفية الإختبارات حسب التصنيف
+            elements.categorySelect.addEventListener('change', function() {
+                filterQuestionsByCategory(this.value);
             });
-            
-            // إضافة مادة جديدة
-            elements.addSubjectSubmit.addEventListener('click', addNewSubject);
             
             // تبديل بين تبويبات لوحة التحكم
             elements.adminTabs.forEach(tab => {
@@ -2008,177 +2518,97 @@
                 });
             });
             
-            // تغيير كلمة المرور الإدارية
-            elements.changePasswordBtn.addEventListener('click', changeAdminPassword);
+            // تغيير نوع السؤال في لوحة الإدارة
+            if (elements.questionType) {
+                elements.questionType.addEventListener('change', function() {
+                    if (this.value === 'mcq') {
+                        elements.mcqOptions.style.display = 'block';
+                        elements.truefalseOptions.style.display = 'none';
+                    } else {
+                        elements.mcqOptions.style.display = 'none';
+                        elements.truefalseOptions.style.display = 'block';
+                    }
+                });
+            }
             
-            // فتح قائمة المستخدم
-            elements.userProfile.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('active');
-            });
+            // إضافة سؤال جديد
+            if (elements.addQuestionBtn) {
+                elements.addQuestionBtn.addEventListener('click', addNewQuestion);
+            }
             
-            // إغلاق قائمة المستخدم عند النقر خارجها
-            document.addEventListener('click', function() {
-                elements.userProfile.classList.remove('active');
-            });
+            // حفظ إعدادات النظام
+            if (elements.saveSettingsBtn) {
+                elements.saveSettingsBtn.addEventListener('click', saveSystemSettings);
+            }
             
-            // منع إغلاق القائمة عند النقر عليها
-            elements.userProfile.querySelector('.user-menu').addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
+            // حفظ إعدادات التليجرام
+            if (elements.saveTelegramBtn) {
+                elements.saveTelegramBtn.addEventListener('click', saveTelegramSettings);
+            }
             
-            // فتح نافذة تسجيل الدخول
-            elements.loginBtn.addEventListener('click', function() {
-                showLoginModal();
-            });
+            // حفظ إعدادات الأقسام
+            if (elements.saveSectionsBtn) {
+                elements.saveSectionsBtn.addEventListener('click', saveSectionsSettings);
+            }
             
-            // فتح نافذة التسجيل
-            elements.registerBtn.addEventListener('click', function() {
-                showRegisterModal();
-            });
+            // إضافة إعلان جديد
+            if (elements.addAdBtn) {
+                elements.addAdBtn.addEventListener('click', addNewAd);
+            }
             
-            // إغلاق نافذة تسجيل الدخول
-            elements.loginModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLoginModal();
-                }
-            });
+            // حفظ إعدادات الموقع
+            if (elements.saveSiteSettingsBtn) {
+                elements.saveSiteSettingsBtn.addEventListener('click', saveSiteSettings);
+            }
             
-            // إغلاق نافذة التسجيل
-            elements.registerModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeRegisterModal();
-                }
-            });
+            // إضافة مادة جديدة
+            if (elements.addSubjectBtn) {
+                elements.addSubjectBtn.addEventListener('click', addNewSubject);
+            }
             
-            // تسجيل الدخول
-            elements.loginSubmit.addEventListener('click', loginUser);
+            // تغيير حالة الموقع
+            if (elements.siteStatus) {
+                elements.siteStatus.addEventListener('change', function() {
+                    elements.maintenanceMessageContainer.style.display = this.checked ? 'none' : 'block';
+                });
+            }
             
-            // تسجيل الدخول بالضغط على Enter
-            elements.loginPassword.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    loginUser();
-                }
-            });
-            
-            // إنشاء حساب جديد
-            elements.registerSubmit.addEventListener('click', registerUser);
-            
-            // التبديل بين نافذتي تسجيل الدخول والتسجيل
-            elements.showRegister.addEventListener('click', function(e) {
-                e.preventDefault();
-                showRegisterModal();
-            });
-            
-            elements.showLogin.addEventListener('click', function(e) {
-                e.preventDefault();
-                showLoginModal();
-            });
-            
-            // تسجيل الدخول كزائر
-            elements.loginAsGuest.addEventListener('click', loginAsGuest);
-            
-            // نسيت كلمة المرور
-            elements.forgotPassword.addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني');
-            });
-            
-            // تصفية المستخدمين
-            elements.userTypeFilter.addEventListener('change', loadUsers);
-            elements.userSearch.addEventListener('input', loadUsers);
-            
-            // إضافة مستخدم جديد
-            elements.addUserBtn.addEventListener('click', addNewUser);
-            
-            // تبديل طريقة تسجيل الدخول
-            elements.loginMethod.addEventListener('change', function() {
-                if (this.value === 'phone') {
-                    elements.emailLoginFields.style.display = 'none';
-                    elements.phoneLoginFields.style.display = 'block';
-                } else {
-                    elements.emailLoginFields.style.display = 'block';
-                    elements.phoneLoginFields.style.display = 'none';
-                }
-            });
-            
-            // تبديل طريقة التسجيل
-            elements.registerMethod.addEventListener('change', function() {
-                if (this.value === 'phone') {
-                    elements.emailRegisterFields.style.display = 'none';
-                    elements.phoneRegisterFields.style.display = 'block';
-                } else {
-                    elements.emailRegisterFields.style.display = 'block';
-                    elements.phoneRegisterFields.style.display = 'none';
-                }
-            });
+            // تصفية الأسئلة في لوحة الإدارة
+            if (elements.filterYear && elements.filterSection) {
+                elements.filterYear.addEventListener('change', loadQuestionsForAdmin);
+                elements.filterSection.addEventListener('change', loadQuestionsForAdmin);
+            }
         }
         
         // تحميل الأقسام بناءً على الصف المختار
         function loadSections(year) {
             elements.sectionSelectionContainer.innerHTML = '';
             
-            if (year === 'prep1' || year === 'prep2' || year === 'prep3') {
-                // أقسام المرحلة الإعدادية
-                const arabicCard = document.createElement('div');
-                arabicCard.className = 'section-card';
-                arabicCard.dataset.section = 'arabic';
-                arabicCard.innerHTML = `
-                    <i class="fas fa-language"></i>
-                    <h3>القسم العربي</h3>
-                    <p>إختبارات خاصة بالقسم العربي</p>
-                `;
-                elements.sectionSelectionContainer.appendChild(arabicCard);
-                
-                const islamicCard = document.createElement('div');
-                islamicCard.className = 'section-card';
-                islamicCard.dataset.section = 'islamic';
-                islamicCard.innerHTML = `
-                    <i class="fas fa-mosque"></i>
-                    <h3>القسم الشرعي</h3>
-                    <p>إختبارات خاصة بالقسم الشرعي</p>
-                `;
-                elements.sectionSelectionContainer.appendChild(islamicCard);
-            } else {
-                // أقسام المرحلة الثانوية
-                const scientificCard = document.createElement('div');
-                scientificCard.className = 'section-card';
-                scientificCard.dataset.section = 'scientific';
-                scientificCard.innerHTML = `
-                    <i class="fas fa-atom"></i>
-                    <h3>القسم العلمي</h3>
-                    <p>إختبارات خاصة بالقسم العلمي</p>
-                `;
-                elements.sectionSelectionContainer.appendChild(scientificCard);
-                
-                const literaryCard = document.createElement('div');
-                literaryCard.className = 'section-card';
-                literaryCard.dataset.section = 'literary';
-                literaryCard.innerHTML = `
-                    <i class="fas fa-book-open"></i>
-                    <h3>القسم الأدبي</h3>
-                    <p>إختبارات خاصة بالقسم الأدبي</p>
-                `;
-                elements.sectionSelectionContainer.appendChild(literaryCard);
-            }
-            
-            // إضافة مستمعين للأحداث للأقسام الجديدة
-            document.querySelectorAll('.section-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    document.querySelectorAll('.section-card').forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedSection = this.dataset.section;
+            if (sectionsConfig[year]) {
+                sectionsConfig[year].forEach(section => {
+                    const sectionCard = document.createElement('div');
+                    sectionCard.className = 'section-card';
+                    sectionCard.dataset.section = section;
+                    sectionCard.innerHTML = `
+                        <i class="fas ${getSectionIcon(section)}"></i>
+                        <h3>${getSectionText(section)}</h3>
+                        <p>إختبارات خاصة بقسم ${getSectionText(section)}</p>
+                    `;
+                    elements.sectionSelectionContainer.appendChild(sectionCard);
                     
-                    // تحديث عنوان الاختبار
-                    const sectionText = getSectionText(selectedSection);
-                    elements.quizTitle.textContent += ` - ${sectionText}`;
-                    
-                    // تحميل المواد الخاصة بهذا القسم
-                    loadSubjects(selectedSection);
-                    
-                    saveCurrentState();
+                    sectionCard.addEventListener('click', function() {
+                        document.querySelectorAll('.section-card').forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedSection = this.dataset.section;
+                        
+                        const sectionText = getSectionText(selectedSection);
+                        elements.quizTitle.textContent += ` - ${sectionText}`;
+                        
+                        loadSubjects(selectedSection);
+                        saveCurrentState();
+                    });
                 });
-            });
+            }
         }
         
         // تحميل المواد الأولية
@@ -2186,50 +2616,8 @@
             const subjectsRef = database.ref('subjects');
             subjectsRef.once('value', (snapshot) => {
                 if (!snapshot.exists()) {
-                    // إذا لم تكن هناك مواد، نقوم بإضافة المواد الافتراضية
                     addDefaultSubjects();
                 }
-            });
-        }
-        
-        // إضافة المواد الافتراضية
-        function addDefaultSubjects() {
-            const subjectsRef = database.ref('subjects');
-            
-            // إضافة مواد القسم العلمي
-            allSubjects.scientific.forEach(subject => {
-                subjectsRef.push({
-                    name: subject.name,
-                    section: 'scientific',
-                    icon: subject.icon
-                });
-            });
-            
-            // إضافة مواد القسم الأدبي
-            allSubjects.literary.forEach(subject => {
-                subjectsRef.push({
-                    name: subject.name,
-                    section: 'literary',
-                    icon: subject.icon
-                });
-            });
-            
-            // إضافة مواد القسم العربي
-            allSubjects.arabic.forEach(subject => {
-                subjectsRef.push({
-                    name: subject.name,
-                    section: 'arabic',
-                    icon: subject.icon
-                });
-            });
-            
-            // إضافة مواد القسم الشرعي
-            allSubjects.islamic.forEach(subject => {
-                subjectsRef.push({
-                    name: subject.name,
-                    section: 'islamic',
-                    icon: subject.icon
-                });
             });
         }
         
@@ -2258,10 +2646,8 @@
                             this.classList.add('selected');
                             selectedSubject = this.dataset.subject;
                             
-                            // تحديث عنوان الاختبار
                             elements.quizTitle.textContent += ` - ${selectedSubject}`;
                             
-                            // تحميل الإختبارات
                             setTimeout(() => {
                                 elements.subjectSelectionContainer.style.display = 'none';
                                 elements.quizContainer.style.display = 'block';
@@ -2279,102 +2665,10 @@
                     elements.sectionSelectionContainer.style.display = 'none';
                     elements.subjectSelectionContainer.style.display = 'grid';
                 } else {
-                    // إذا لم تكن هناك مواد، انتقل مباشرة إلى الإختبارات
                     elements.sectionSelectionContainer.style.display = 'none';
                     elements.quizContainer.style.display = 'block';
                     loadQuestions();
                 }
-            });
-        }
-        
-        // تحميل المواد للإدارة
-        function loadSubjectsForAdmin() {
-            const subjectsRef = database.ref('subjects');
-            subjectsRef.on('value', (snapshot) => {
-                elements.questionSubjectSelect.innerHTML = '<option value="">اختر المادة</option>';
-                elements.adminSubjectSelect.innerHTML = '<option value="all">جميع المواد</option>';
-                elements.subjectsList.innerHTML = '';
-                
-                snapshot.forEach((childSnapshot) => {
-                    const subject = childSnapshot.val();
-                    
-                    // إضافة إلى قائمة المواد في النموذج
-                    const option1 = document.createElement('option');
-                    option1.value = subject.name;
-                    option1.textContent = subject.name;
-                    elements.questionSubjectSelect.appendChild(option1);
-                    
-                    // إضافة إلى قائمة تصفية المواد
-                    const option2 = document.createElement('option');
-                    option2.value = subject.name;
-                    option2.textContent = subject.name;
-                    elements.adminSubjectSelect.appendChild(option2);
-                    
-                    // إضافة إلى قائمة المواد في تبويب الإعدادات
-                    const subjectItem = document.createElement('div');
-                    subjectItem.className = 'question-item';
-                    subjectItem.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <i class="fas ${subject.icon}" style="font-size: 20px;"></i>
-                                <h4>${subject.name}</h4>
-                            </div>
-                            <div class="question-meta">
-                                <span><i class="fas ${getSectionIcon(subject.section)}"></i> ${getSectionText(subject.section)}</span>
-                            </div>
-                        </div>
-                        <div class="question-actions">
-                            <button class="btn btn-danger btn-sm delete-subject-btn" data-id="${childSnapshot.key}">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </div>
-                    `;
-                    elements.subjectsList.appendChild(subjectItem);
-                });
-                
-                // إضافة مستمعين لأزرار الحذف
-                document.querySelectorAll('.delete-subject-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        if (confirm('هل أنت متأكد من حذف هذه المادة؟ سيتم حذف جميع الإختبارات المرتبطة بها أيضًا.')) {
-                            const subjectRef = database.ref(`subjects/${btn.dataset.id}`);
-                            subjectRef.remove()
-                                .then(() => {
-                                    // حذف الإختبارات المرتبطة بهذه المادة
-                                    deleteQuestionsBySubject(btn.dataset.id);
-                                })
-                                .catch(error => {
-                                    showAdminMessage('error', 'حدث خطأ أثناء حذف المادة: ' + error.message);
-                                });
-                        }
-                    });
-                });
-                
-                // تحديث عدد المواد
-                elements.subjectsCountDisplay.textContent = snapshot.size;
-            });
-        }
-        
-        // الحصول على أيقونة القسم
-        function getSectionIcon(section) {
-            switch(section) {
-                case 'scientific': return 'fa-atom';
-                case 'literary': return 'fa-book-open';
-                case 'arabic': return 'fa-language';
-                case 'islamic': return 'fa-mosque';
-                default: return 'fa-book';
-            }
-        }
-        
-        // حذف الإختبارات المرتبطة بمادة معينة
-        function deleteQuestionsBySubject(subjectName) {
-            const questionsRef = database.ref('questions');
-            questionsRef.once('value', (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    const question = childSnapshot.val();
-                    if (question.subject === subjectName) {
-                        database.ref(`questions/${childSnapshot.key}`).remove();
-                    }
-                });
             });
         }
         
@@ -2387,42 +2681,24 @@
             questionsRef.once('value', (snapshot) => {
                 questions = [];
                 categories = new Set(['all']);
-                let mcqCount = 0;
-                let tfCount = 0;
                 
                 snapshot.forEach((childSnapshot) => {
                     const question = childSnapshot.val();
                     question.id = childSnapshot.key;
                     
-                    // تصفية الإختبارات حسب الصف والقسم والمادة المحددة
                     if (question.year === selectedYear && 
                         question.section === selectedSection && 
                         (!selectedSubject || question.subject === selectedSubject)) {
                         questions.push(question);
                         
-                        // جمع التصنيفات
                         if (question.category) {
                             categories.add(question.category);
-                        }
-                        
-                        // عد أنواع الإختبارات
-                        if (question.type === 'mcq') {
-                            mcqCount++;
-                        } else {
-                            tfCount++;
                         }
                     }
                 });
                 
-                // تحديث الإحصائيات
-                elements.totalQuestionsDisplay.textContent = questions.length;
-                elements.mcqCountDisplay.textContent = mcqCount;
-                elements.tfCountDisplay.textContent = tfCount;
-                
-                // تحديث قوائم التصنيفات
                 updateCategoryFilters();
                 
-                // إذا كان هناك إختبارات، ابدأ الاختبار
                 if (questions.length > 0) {
                     startQuiz();
                 } else {
@@ -2443,32 +2719,20 @@
             elements.quizLoading.style.display = 'flex';
             elements.questionContainer.innerHTML = '';
             
-            const questionsRef = database.ref('questions');
-            questionsRef.once('value', (snapshot) => {
-                questions = [];
-                snapshot.forEach((childSnapshot) => {
-                    const question = childSnapshot.val();
-                    if ((question.category === selectedCategory || selectedCategory === 'all') && 
-                        question.year === selectedYear && 
-                        question.section === selectedSection &&
-                        (!selectedSubject || question.subject === selectedSubject)) {
-                        question.id = childSnapshot.key;
-                        questions.push(question);
-                    }
-                });
-                
-                if (questions.length > 0) {
-                    currentQuestionIndex = 0;
-                    score = 0;
-                    userAnswers = Array(questions.length).fill(null);
-                    showQuestion();
-                    updateProgressBar();
-                } else {
-                    showNoQuestionsMessage();
-                }
-                
-                elements.quizLoading.style.display = 'none';
-            });
+            const filteredQuestions = questions.filter(q => q.category === selectedCategory);
+            
+            if (filteredQuestions.length > 0) {
+                questions = filteredQuestions;
+                currentQuestionIndex = 0;
+                score = 0;
+                userAnswers = Array(questions.length).fill(null);
+                showQuestion();
+                updateProgressBar();
+            } else {
+                showNoQuestionsMessage();
+            }
+            
+            elements.quizLoading.style.display = 'none';
         }
         
         // عرض رسالة عدم وجود إختبارات
@@ -2484,7 +2748,6 @@
         
         // تحديث قوائم التصنيفات
         function updateCategoryFilters() {
-            // تحديث قائمة التصنيفات للاختبار
             elements.categorySelect.innerHTML = '';
             categories.forEach(category => {
                 const option = document.createElement('option');
@@ -2493,18 +2756,6 @@
                 elements.categorySelect.appendChild(option);
             });
             
-            // تحديث قائمة التصنيفات للإدارة
-            elements.adminCategorySelect.innerHTML = '<option value="all">جميع التصنيفات</option>';
-            categories.forEach(category => {
-                if (category !== 'all') {
-                    const option = document.createElement('option');
-                    option.value = category;
-                    option.textContent = category;
-                    elements.adminCategorySelect.appendChild(option);
-                }
-            });
-            
-            // إظهار تصفية التصنيف إذا كان هناك أكثر من تصنيف
             elements.categoryFilter.style.display = categories.size > 2 ? 'block' : 'none';
         }
         
@@ -2525,7 +2776,7 @@
         function startTimer() {
             quizStartTime = new Date();
             clearInterval(timerInterval);
-            timeLeft = defaultExamTime * 60; // تحويل الدقائق إلى ثواني
+            timeLeft = defaultExamTime * 60;
             
             updateTimerDisplay();
             
@@ -2546,7 +2797,6 @@
             const seconds = timeLeft % 60;
             elements.timerDisplay.querySelector('span').textContent = `الوقت المتبقي: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
             
-            // تغيير اللون عندما يقل الوقت عن دقيقتين
             if (timeLeft <= 120) {
                 elements.timerDisplay.style.color = 'var(--incorrect-color)';
             } else {
@@ -2562,7 +2812,7 @@
         // حساب الوقت المستغرق
         function calculateTimeTaken() {
             const endTime = new Date();
-            const timeDiff = endTime - quizStartTime; // الفارق بالمللي ثانية
+            const timeDiff = endTime - quizStartTime;
             
             const minutes = Math.floor(timeDiff / 60000);
             const seconds = Math.floor((timeDiff % 60000) / 1000);
@@ -2603,7 +2853,7 @@
                 }
                 
                 questionHTML += `</div>`;
-            } else { // true/false
+            } else {
                 questionHTML += `
                     <div class="true-false-options">
                         <div class="true-false-btn ${userAnswers[currentQuestionIndex] === 'true' ? 'selected' : ''}" data-answer="true">
@@ -2688,7 +2938,6 @@
         
         // عرض النتائج
         function showResults() {
-            // حساب النتيجة
             score = 0;
             let feedbackHTML = '<h3>التصحيح:</h3><ul>';
             
@@ -2711,7 +2960,6 @@
             
             feedbackHTML += '</ul>';
             
-            // عرض النتائج
             elements.quizContainer.style.display = 'none';
             elements.resultsContainer.style.display = 'block';
             elements.scoreDisplay.textContent = score;
@@ -2719,7 +2967,6 @@
             const percentage = Math.round((score / questions.length) * 100);
             elements.percentageDisplay.textContent = `${percentage}%`;
             
-            // إضافة ميدالية حسب النسبة
             let medal = '';
             if (percentage >= 90) {
                 medal = '<i class="fas fa-medal gold"></i>';
@@ -2733,7 +2980,6 @@
             elements.timeTakenDisplay.textContent = calculateTimeTaken();
             elements.feedbackDisplay.innerHTML = feedbackHTML;
             
-            // حفظ النتيجة في Firebase
             saveQuizResult(score, questions.length);
         }
         
@@ -2754,21 +3000,9 @@
             
             const resultsRef = database.ref('quizResults');
             resultsRef.push(result)
-                .then(() => {
-                    // تحديث عدد النتائج
-                    updateResultsCount();
-                })
                 .catch(error => {
                     console.error('Error saving quiz result:', error);
                 });
-        }
-        
-        // تحديث عدد نتائج الاختبارات
-        function updateResultsCount() {
-            const resultsRef = database.ref('quizResults');
-            resultsRef.once('value', (snapshot) => {
-                elements.resultsCountDisplay.textContent = snapshot.size;
-            });
         }
         
         // تنسيق الإجابة لعرضها
@@ -2811,7 +3045,18 @@
                 case 'literary': return 'القسم الأدبي';
                 case 'arabic': return 'القسم العربي';
                 case 'islamic': return 'القسم الشرعي';
-                default: return '';
+                default: return section;
+            }
+        }
+        
+        // الحصول على أيقونة القسم
+        function getSectionIcon(section) {
+            switch(section) {
+                case 'scientific': return 'fa-atom';
+                case 'literary': return 'fa-book-open';
+                case 'arabic': return 'fa-language';
+                case 'islamic': return 'fa-mosque';
+                default: return 'fa-book';
             }
         }
         
@@ -2835,548 +3080,12 @@
                 elements.adminPanel.style.display = 'block';
                 elements.adminPanel.classList.add('active');
                 elements.overlay.classList.add('active');
-                loadAdminQuestions();
-                loadSubjectsForAdmin();
-                loadUsers();
                 elements.passwordInput.value = '';
                 elements.passwordError.style.display = 'none';
-                
-                // تحميل حالة الاختبار
-                loadExamStatus();
-                // تحميل عدد المستخدمين ونتائج الاختبارات
-                updateUsersCount();
-                updateResultsCount();
             } else {
                 elements.passwordError.style.display = 'block';
             }
         }
-        
-        // تحميل حالة الاختبار
-        function loadExamStatus() {
-            const examStatusRef = database.ref('examStatus');
-            examStatusRef.on('value', (snapshot) => {
-                if (snapshot.exists()) {
-                    examActive = snapshot.val().active;
-                    defaultExamTime = snapshot.val().time || 10;
-                    elements.examToggle.checked = !examActive;
-                    elements.examStatusText.textContent = examActive ? 'نشط' : 'متوقف';
-                    elements.timerSetting.value = defaultExamTime;
-                } else {
-                    // إذا لم تكن هناك حالة محددة، افترض أن الاختبار نشط
-                    examStatusRef.set({
-                        active: true,
-                        time: 10
-                    });
-                }
-            });
-        }
-        
-        // تحديث حالة الاختبار
-        function updateExamStatus() {
-            const isActive = !elements.examToggle.checked;
-            const examStatusRef = database.ref('examStatus');
-            examStatusRef.update({
-                active: isActive
-            });
-            
-            elements.examStatusText.textContent = isActive ? 'نشط' : 'متوقف';
-            showAdminMessage('success', `تم ${isActive ? 'تفعيل' : 'إيقاف'} الاختبارات بنجاح`);
-        }
-        
-        // تحديث وقت الاختبار
-        function updateExamTime() {
-            const newTime = parseInt(elements.timerSetting.value);
-            if (newTime >= 1 && newTime <= 120) {
-                defaultExamTime = newTime;
-                const examStatusRef = database.ref('examStatus');
-                examStatusRef.update({
-                    time: newTime
-                });
-                showAdminMessage('success', 'تم تحديث وقت الاختبار بنجاح');
-            } else {
-                showAdminMessage('error', 'الرجاء إدخال وقت بين 1 و 120 دقيقة');
-            }
-        }
-        
-        // عرض نافذة إضافة مادة جديدة
-        function showAddSubjectModal() {
-            elements.subjectModal.style.display = 'flex';
-            elements.newSubjectName.value = '';
-            elements.newSubjectName.focus();
-        }
-        
-        // إضافة مادة جديدة
-        function addNewSubject() {
-            const name = elements.newSubjectName.value.trim();
-            const section = elements.newSubjectSection.value;
-            const icon = elements.newSubjectIcon.value;
-            
-            if (!name) {
-                showAdminMessage('error', 'الرجاء إدخال اسم المادة');
-                return;
-            }
-            
-            const subjectsRef = database.ref('subjects');
-            subjectsRef.push({
-                name,
-                section,
-                icon
-            }).then(() => {
-                elements.subjectModal.style.display = 'none';
-                showAdminMessage('success', 'تمت إضافة المادة بنجاح');
-                loadSubjectsForAdmin();
-            }).catch(error => {
-                showAdminMessage('error', 'حدث خطأ أثناء إضافة المادة: ' + error.message);
-            });
-        }
-        
-        // تحميل الإختبارات للوحة التحكم مع التصفية
-        function loadAdminQuestions() {
-            elements.questionsList.innerHTML = '<h3><i class="fas fa-list"></i> الإختبارات المضافة</h3>';
-            
-            const selectedCategory = elements.adminCategorySelect.value;
-            const selectedType = elements.adminTypeSelect.value;
-            const selectedYear = elements.adminYearSelect.value;
-            const selectedSection = elements.adminSectionSelect.value;
-            const selectedSubject = elements.adminSubjectSelect.value;
-            const selectedDifficulty = elements.adminDifficultySelect.value;
-            
-            const questionsRef = database.ref('questions');
-            questionsRef.on('value', (snapshot) => {
-                if (!snapshot.exists()) {
-                    elements.questionsList.innerHTML += `
-                        <div class="no-questions">
-                            <i class="fas fa-info-circle"></i> لا توجد إختبارات مضافة حتى الآن.
-                        </div>
-                    `;
-                    return;
-                }
-                
-                snapshot.forEach((childSnapshot) => {
-                    const question = childSnapshot.val();
-                    
-                    // تطبيق الفلتر
-                    if (selectedCategory !== 'all' && question.category !== selectedCategory) return;
-                    if (selectedType !== 'all' && question.type !== selectedType) return;
-                    if (selectedYear !== 'all' && question.year !== selectedYear) return;
-                    if (selectedSection !== 'all' && question.section !== selectedSection) return;
-                    if (selectedSubject !== 'all' && question.subject !== selectedSubject) return;
-                    if (selectedDifficulty !== 'all' && question.difficulty !== selectedDifficulty) return;
-                    
-                    const questionItem = document.createElement('div');
-                    questionItem.className = 'question-item';
-                    
-                    let optionsHtml = '';
-                    if (question.type === 'mcq') {
-                        optionsHtml = '<div class="options-list">';
-                        for (let i = 1; i <= 4; i++) {
-                            if (question[`option${i}`]) {
-                                const isCorrect = question.correctAnswer === i.toString();
-                                optionsHtml += `
-                                    <div class="option-item ${isCorrect ? 'correct-option' : ''}">
-                                        <strong>الخيار ${i}:</strong> ${question[`option${i}`]}
-                                        ${isCorrect ? ' <i class="fas fa-check" style="color: var(--admin-success);"></i>' : ''}
-                                    </div>
-                                `;
-                            }
-                        }
-                        optionsHtml += '</div>';
-                    }
-                    
-                    questionItem.innerHTML = `
-                        <h4>${question.text}</h4>
-                        <div class="question-meta">
-                            <span><i class="fas fa-tag"></i> ${question.category || 'غير محدد'}</span>
-                            <span><i class="fas fa-layer-group"></i> ${getDifficultyText(question.difficulty) || 'غير محدد'}</span>
-                            <span><i class="fas fa-graduation-cap"></i> ${getYearText(question.year)}</span>
-                            <span><i class="fas fa-chalkboard"></i> ${getSectionText(question.section)}</span>
-                            ${question.subject ? `<span><i class="fas fa-book"></i> ${question.subject}</span>` : ''}
-                            <span><i class="fas ${question.type === 'mcq' ? 'fa-list-ol' : 'fa-check-circle'}"></i> ${question.type === 'mcq' ? 'اختيار من متعدد' : 'صح أو خطأ'}</span>
-                        </div>
-                        ${optionsHtml}
-                        <div class="question-actions">
-                            <button class="btn btn-danger btn-sm delete-btn" data-id="${childSnapshot.key}">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </div>
-                    `;
-                    
-                    elements.questionsList.appendChild(questionItem);
-                });
-                
-                // إضافة مستمعين لأزرار الحذف
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('هل أنت متأكد من حذف هذا السؤال؟')) {
-                            const questionRef = database.ref(`questions/${btn.dataset.id}`);
-                            questionRef.remove()
-                                .then(() => {
-                                    // إعادة تحميل الإختبارات بعد الحذف
-                                    loadAdminQuestions();
-                                })
-                                .catch(error => {
-                                    showAdminMessage('error', 'حدث خطأ أثناء حذف السؤال: ' + error.message);
-                                });
-                        }
-                    });
-                });
-            });
-        }
-        
-        // تحميل المستخدمين
-        function loadUsers() {
-            const selectedType = elements.userTypeFilter.value;
-            const searchTerm = elements.userSearch.value.toLowerCase();
-            
-            const usersRef = database.ref('users');
-            usersRef.on('value', (snapshot) => {
-                elements.usersList.innerHTML = '';
-                
-                if (!snapshot.exists()) {
-                    elements.usersList.innerHTML = `
-                        <div class="no-questions">
-                            <i class="fas fa-info-circle"></i> لا يوجد مستخدمون مسجلون حتى الآن.
-                        </div>
-                    `;
-                    return;
-                }
-                
-                let userCount = 0;
-                
-                snapshot.forEach((childSnapshot) => {
-                    const user = childSnapshot.val();
-                    user.id = childSnapshot.key;
-                    
-                    // تطبيق الفلتر
-                    if (selectedType !== 'all' && user.role !== selectedType) return;
-                    if (searchTerm && !user.name.toLowerCase().includes(searchTerm) && !user.email.toLowerCase().includes(searchTerm)) return;
-                    
-                    userCount++;
-                    
-                    const userItem = document.createElement('div');
-                    userItem.className = 'question-item';
-                    userItem.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar" style="width: 30px; height: 30px; font-size: 14px;">
-                                    ${user.name.charAt(0)}
-                                </div>
-                                <div>
-                                    <h4>${user.name}</h4>
-                                    <small style="color: rgba(255, 255, 255, 0.7);">${user.email || user.phone || 'لا يوجد'}</small>
-                                </div>
-                            </div>
-                            <div class="question-meta">
-                                <span><i class="fas ${getUserRoleIcon(user.role)}"></i> ${getUserRoleText(user.role)}</span>
-                                <span><i class="fas fa-calendar"></i> ${formatDate(user.createdAt)}</span>
-                            </div>
-                        </div>
-                        <div class="question-actions">
-                            <button class="btn btn-danger btn-sm delete-user-btn" data-id="${user.id}">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                            <button class="btn btn-warning btn-sm edit-user-btn" data-id="${user.id}">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                        </div>
-                    `;
-                    
-                    elements.usersList.appendChild(userItem);
-                });
-                
-                // تحديث عدد المستخدمين
-                elements.usersCountDisplay.textContent = userCount;
-                
-                // إضافة مستمعين لأزرار الحذف والتعديل
-                document.querySelectorAll('.delete-user-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                            const userRef = database.ref(`users/${btn.dataset.id}`);
-                            userRef.remove()
-                                .then(() => {
-                                    showAdminMessage('success', 'تم حذف المستخدم بنجاح');
-                                })
-                                .catch(error => {
-                                    showAdminMessage('error', 'حدث خطأ أثناء حذف المستخدم: ' + error.message);
-                                });
-                        }
-                    });
-                });
-                
-                document.querySelectorAll('.edit-user-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // في تطبيق حقيقي، هنا يجب فتح نموذج لتعديل بيانات المستخدم
-                        alert('سيتم فتح نموذج لتعديل بيانات المستخدم في التطبيق الكامل');
-                    });
-                });
-            });
-        }
-        
-        // الحصول على أيقونة دور المستخدم
-        function getUserRoleIcon(role) {
-            switch(role) {
-                case 'admin': return 'fa-user-shield';
-                case 'teacher': return 'fa-chalkboard-teacher';
-                default: return 'fa-user-graduate';
-            }
-        }
-        
-        // الحصول على نص دور المستخدم
-        function getUserRoleText(role) {
-            switch(role) {
-                case 'admin': return 'مشرف';
-                case 'teacher': return 'معلم';
-                default: return 'طالب';
-            }
-        }
-        
-        // تنسيق التاريخ
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ar-EG');
-        }
-        
-        // إضافة مستخدم جديد
-        function addNewUser() {
-            const name = elements.newUserName.value.trim();
-            const email = elements.newUserEmail.value.trim();
-            const phone = elements.newUserPhone.value.trim();
-            const password = elements.newUserPassword.value;
-            const role = elements.newUserRole.value;
-            
-            if (!name || (!email && !phone) || !password) {
-                showAdminMessage('error', 'الرجاء ملء جميع الحقول المطلوبة');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showAdminMessage('error', 'كلمة المرور يجب أن تكون على الأقل 6 أحرف');
-                return;
-            }
-            
-            const usersRef = database.ref('users');
-            usersRef.push({
-                name,
-                email: email || null,
-                phone: phone || null,
-                password, // في الواقع يجب تشفيرها
-                role,
-                createdAt: new Date().toISOString()
-            }).then(() => {
-                showAdminMessage('success', 'تمت إضافة المستخدم بنجاح');
-                elements.newUserName.value = '';
-                elements.newUserEmail.value = '';
-                elements.newUserPhone.value = '';
-                elements.newUserPassword.value = '';
-                loadUsers();
-            }).catch(error => {
-                showAdminMessage('error', 'حدث خطأ أثناء إضافة المستخدم: ' + error.message);
-            });
-        }
-        
-        // تبديل بين تبويبات لوحة التحكم
-        function switchAdminTab(tabId) {
-            // إزالة النشاط من جميع التبويبات والمحتويات
-            elements.adminTabs.forEach(t => t.classList.remove('active'));
-            elements.adminTabContents.forEach(c => c.classList.remove('active'));
-            
-            // إضافة النشاط للتبويب والمحتوى المحدد
-            document.querySelector(`.admin-tab[data-tab="${tabId}"]`).classList.add('active');
-            document.getElementById(`${tabId}-tab`).classList.add('active');
-            
-            // إذا كان التبويب هو الإحصائيات، قم بتحديث البيانات
-            if (tabId === 'stats') {
-                updateStats();
-            } else if (tabId === 'users') {
-                loadUsers();
-            }
-        }
-        
-        // تحديث الإحصائيات
-        function updateStats() {
-            // عدد الإختبارات
-            const questionsRef = database.ref('questions');
-            questionsRef.once('value', (snapshot) => {
-                elements.totalQuestionsDisplay.textContent = snapshot.size;
-                
-                // عد أنواع الإختبارات
-                let mcqCount = 0;
-                let tfCount = 0;
-                
-                snapshot.forEach((childSnapshot) => {
-                    const question = childSnapshot.val();
-                    if (question.type === 'mcq') {
-                        mcqCount++;
-                    } else {
-                        tfCount++;
-                    }
-                });
-                
-                elements.mcqCountDisplay.textContent = mcqCount;
-                elements.tfCountDisplay.textContent = tfCount;
-            });
-            
-            // عدد المواد
-            const subjectsRef = database.ref('subjects');
-            subjectsRef.once('value', (snapshot) => {
-                elements.subjectsCountDisplay.textContent = snapshot.size;
-            });
-            
-            // عدد نتائج الاختبارات
-            updateResultsCount();
-            
-            // عدد المستخدمين
-            updateUsersCount();
-        }
-        
-        // تحديث عدد المستخدمين
-        function updateUsersCount() {
-            const usersRef = database.ref('users');
-            usersRef.once('value', (snapshot) => {
-                elements.usersCountDisplay.textContent = snapshot.size || 0;
-            });
-        }
-        
-        // تغيير كلمة المرور الإدارية
-        function changeAdminPassword() {
-            const newPassword = elements.adminPasswordChange.value.trim();
-            
-            if (!newPassword) {
-                showAdminMessage('error', 'الرجاء إدخال كلمة مرور جديدة');
-                return;
-            }
-            
-            if (newPassword.length < 6) {
-                showAdminMessage('error', 'كلمة المرور يجب أن تكون على الأقل 6 أحرف');
-                return;
-            }
-            
-            // حفظ كلمة المرور الجديدة في localStorage
-            adminPassword = newPassword;
-            localStorage.setItem('adminPassword', newPassword);
-            elements.adminPasswordChange.value = '';
-            showAdminMessage('success', 'تم تغيير كلمة المرور بنجاح');
-        }
-        
-        // عرض رسالة في لوحة التحكم
-        function showAdminMessage(type, text) {
-            // إزالة أي رسائل سابقة
-            const oldMessage = document.querySelector('.admin-message');
-            if (oldMessage) oldMessage.remove();
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `admin-message ${type === 'success' ? 'success-message' : 'error-message'}`;
-            messageDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${text}`;
-            
-            const adminForm = document.querySelector('.admin-form');
-            if (adminForm) {
-                adminForm.appendChild(messageDiv);
-            } else {
-                document.querySelector('.admin-tab-content.active').prepend(messageDiv);
-            }
-            
-            // إزالة الرسالة بعد 5 ثواني
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 5000);
-        }
-        
-        // مسح الحقول بعد الإضافة
-        function resetForm() {
-            elements.questionText.value = '';
-            elements.questionCategory.value = '';
-            document.querySelectorAll('.option-input').forEach(input => input.value = '');
-            elements.questionText.focus();
-        }
-        
-        // إضافة سؤال جديد
-        elements.addQuestionBtn.addEventListener('click', () => {
-            const type = elements.questionTypeSelect.value;
-            const year = elements.questionYearSelect.value;
-            const section = elements.questionSectionSelect.value;
-            const subject = elements.questionSubjectSelect.value || '';
-            const text = elements.questionText.value.trim();
-            const correctAnswer = elements.correctAnswerSelect.value;
-            const category = elements.questionCategory.value.trim();
-            const difficulty = elements.questionDifficulty.value;
-            
-            if (!text) {
-                showAdminMessage('error', 'الرجاء إدخال نص السؤال');
-                return;
-            }
-            
-            elements.addQuestionLoading.style.display = 'flex';
-            
-            if (type === 'mcq') {
-                const options = [];
-                let isEmptyOption = false;
-                
-                document.querySelectorAll('.option-input').forEach(input => {
-                    if (!input.value.trim()) isEmptyOption = true;
-                    options.push(input.value.trim());
-                });
-                
-                if (isEmptyOption) {
-                    elements.addQuestionLoading.style.display = 'none';
-                    showAdminMessage('error', 'الرجاء إدخال جميع الخيارات');
-                    return;
-                }
-                
-                const newQuestion = {
-                    type,
-                    year,
-                    section,
-                    subject,
-                    text,
-                    option1: options[0],
-                    option2: options[1],
-                    option3: options[2],
-                    option4: options[3],
-                    correctAnswer,
-                    category: category || 'عام',
-                    difficulty,
-                    createdAt: new Date().toISOString()
-                };
-                
-                const questionsRef = database.ref('questions');
-                questionsRef.push(newQuestion)
-                    .then(() => {
-                        showAdminMessage('success', 'تم إضافة السؤال بنجاح!');
-                        resetForm();
-                    })
-                    .catch(error => {
-                        showAdminMessage('error', 'حدث خطأ أثناء إضافة السؤال: ' + error.message);
-                    })
-                    .finally(() => {
-                        elements.addQuestionLoading.style.display = 'none';
-                    });
-            } else { // true/false
-                const newQuestion = {
-                    type,
-                    year,
-                    section,
-                    subject,
-                    text,
-                    correctAnswer,
-                    category: category || 'عام',
-                    difficulty,
-                    createdAt: new Date().toISOString()
-                };
-                
-                const questionsRef = database.ref('questions');
-                questionsRef.push(newQuestion)
-                    .then(() => {
-                        showAdminMessage('success', 'تم إضافة السؤال بنجاح!');
-                        resetForm();
-                    })
-                    .catch(error => {
-                        showAdminMessage('error', 'حدث خطأ أثناء إضافة السؤال: ' + error.message);
-                    })
-                    .finally(() => {
-                        elements.addQuestionLoading.style.display = 'none';
-                    });
-            }
-        });
         
         // مراقبة حالة الاختبار
         function checkExamStatus() {
@@ -3387,7 +3096,6 @@
                     defaultExamTime = snapshot.val().time || 10;
                     
                     if (!examActive) {
-                        // إذا كان الاختبار متوقفاً، عرض رسالة للطالب
                         elements.yearSelectionContainer.innerHTML = `
                             <div class="no-questions" style="grid-column: 1 / -1;">
                                 <i class="fas fa-exclamation-triangle"></i> 
@@ -3397,7 +3105,6 @@
                         `;
                     }
                 } else {
-                    // إذا لم تكن هناك حالة محددة، افترض أن الاختبار نشط
                     examStatusRef.set({
                         active: true,
                         time: 10
@@ -3406,264 +3113,345 @@
             });
         }
         
-        // عرض نافذة تسجيل الدخول
-        function showLoginModal() {
-            elements.loginModal.style.display = 'flex';
-            elements.loginEmail.focus();
-            elements.loginError.style.display = 'none';
-        }
+        // المواد الدراسية لكل قسم
+        const allSubjects = {
+            scientific: [
+                { name: "الرياضيات", icon: "fa-calculator" },
+                { name: "الكيمياء", icon: "fa-flask" },
+                { name: "الفيزياء", icon: "fa-atom" },
+                { name: "الأحياء", icon: "fa-dna" },
+                { name: "اللغة العربية", icon: "fa-language" }
+            ],
+            literary: [
+                { name: "اللغة العربية", icon: "fa-language" },
+                { name: "الأدب", icon: "fa-book-open" },
+                { name: "الفقه", icon: "fa-pray" },
+                { name: "القرآن الكريم", icon: "fa-quran" },
+                { name: "الحديث", icon: "fa-hands-praying" },
+                { name: "التوحيد", icon: "fa-mosque" },
+                { name: "الجغرافيا", icon: "fa-globe" },
+                { name: "التاريخ", icon: "fa-history" },
+                { name: "المنطق", icon: "fa-brain" },
+                { name: "البلاغة", icon: "fa-scroll" },
+                { name: "الإنشاء", icon: "fa-comment" },
+                { name: "الهندسة", icon: "fa-infinity" }
+            ],
+            arabic: [
+                { name: "اللغة العربية", icon: "fa-language" },
+                { name: "النحو", icon: "fa-book" },
+                { name: "الصرف", icon: "fa-font" },
+                { name: "الأدب", icon: "fa-book-open" },
+                { name: "البلاغة", icon: "fa-scroll" }
+            ],
+            islamic: [
+                { name: "الفقه", icon: "fa-pray" },
+                { name: "القرآن الكريم", icon: "fa-quran" },
+                { name: "الحديث", icon: "fa-hands-praying" },
+                { name: "التوحيد", icon: "fa-mosque" },
+                { name: "السيرة النبوية", icon: "fa-history" }
+            ]
+        };
         
-        // إغلاق نافذة تسجيل الدخول
-        function closeLoginModal() {
-            elements.loginModal.style.display = 'none';
-            elements.loginEmail.value = '';
-            elements.loginPassword.value = '';
-            elements.loginPhone.value = '';
-            elements.loginPhonePassword.value = '';
-            elements.loginError.style.display = 'none';
-        }
-        
-        // عرض نافذة التسجيل
-        function showRegisterModal() {
-            elements.registerModal.style.display = 'flex';
-            elements.registerName.focus();
-            elements.registerError.style.display = 'none';
-            elements.loginModal.style.display = 'none';
-        }
-        
-        // إغلاق نافذة التسجيل
-        function closeRegisterModal() {
-            elements.registerModal.style.display = 'none';
-            elements.registerName.value = '';
-            elements.registerEmail.value = '';
-            elements.registerPassword.value = '';
-            elements.registerConfirmPassword.value = '';
-            elements.registerPhoneName.value = '';
-            elements.registerPhone.value = '';
-            elements.registerPhonePassword.value = '';
-            elements.registerPhoneConfirmPassword.value = '';
-            elements.registerError.style.display = 'none';
-        }
-        
-        // تسجيل الدخول
-        function loginUser() {
-            let email, phone, password;
+        // إضافة المواد الافتراضية
+        function addDefaultSubjects() {
+            const subjectsRef = database.ref('subjects');
             
-            if (elements.loginMethod.value === 'phone') {
-                phone = elements.loginPhone.value.trim();
-                password = elements.loginPhonePassword.value;
-                
-                if (!phone || !password) {
-                    elements.loginError.textContent = 'الرجاء إدخال رقم الهاتف وكلمة المرور';
-                    elements.loginError.style.display = 'block';
-                    return;
-                }
-            } else {
-                email = elements.loginEmail.value.trim();
-                password = elements.loginPassword.value;
-                
-                if (!email || !password) {
-                    elements.loginError.textContent = 'الرجاء إدخال البريد الإلكتروني وكلمة المرور';
-                    elements.loginError.style.display = 'block';
-                    return;
-                }
-            }
-            
-            // في تطبيق حقيقي، هنا يجب التحقق من صحة بيانات المستخدم
-            const usersRef = database.ref('users');
-            usersRef.once('value', (snapshot) => {
-                let userFound = false;
-                
-                snapshot.forEach((childSnapshot) => {
-                    const user = childSnapshot.val();
-                    
-                    if ((email && user.email === email && user.password === password) ||
-                        (phone && user.phone === phone && user.password === password)) {
-                        userFound = true;
-                        currentUser = {
-                            id: childSnapshot.key,
-                            name: user.name,
-                            email: user.email,
-                            phone: user.phone,
-                            role: user.role
-                        };
-                        
-                        // تحديث واجهة المستخدم
-                        updateUserUI();
-                        closeLoginModal();
-                        
-                        // حفظ حالة تسجيل الدخول إذا تم اختيار "تذكرني"
-                        if (elements.rememberMe.checked) {
-                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        }
-                        
-                        return;
-                    }
+            allSubjects.scientific.forEach(subject => {
+                subjectsRef.push({
+                    name: subject.name,
+                    section: 'scientific',
+                    icon: subject.icon,
+                    year: 'first'
                 });
-                
-                if (!userFound) {
-                    elements.loginError.textContent = 'بيانات الدخول غير صحيحة';
-                    elements.loginError.style.display = 'block';
-                }
+            });
+            
+            allSubjects.literary.forEach(subject => {
+                subjectsRef.push({
+                    name: subject.name,
+                    section: 'literary',
+                    icon: subject.icon,
+                    year: 'first'
+                });
+            });
+            
+            allSubjects.arabic.forEach(subject => {
+                subjectsRef.push({
+                    name: subject.name,
+                    section: 'arabic',
+                    icon: subject.icon,
+                    year: 'prep1'
+                });
+            });
+            
+            allSubjects.islamic.forEach(subject => {
+                subjectsRef.push({
+                    name: subject.name,
+                    section: 'islamic',
+                    icon: subject.icon,
+                    year: 'prep1'
+                });
             });
         }
         
-        // تسجيل الدخول كزائر
-        function loginAsGuest() {
-            currentUser = {
-                id: null,
-                name: 'زائر',
-                email: '',
-                phone: '',
-                role: 'guest'
+        // إضافة سؤال جديد
+        function addNewQuestion() {
+            const questionText = document.getElementById('question-text').value.trim();
+            const questionType = document.getElementById('question-type').value;
+            const category = document.getElementById('question-category').value.trim();
+            const difficulty = document.getElementById('question-difficulty').value;
+            const year = document.getElementById('question-year').value;
+            const section = document.getElementById('question-section').value;
+            const subject = document.getElementById('question-subject').value;
+            
+            if (!questionText) {
+                alert('الرجاء إدخال نص السؤال');
+                return;
+            }
+            
+            let correctAnswer;
+            let questionData = {
+                text: questionText,
+                type: questionType,
+                category: category || '',
+                difficulty,
+                year,
+                section,
+                subject: subject || '',
+                createdAt: new Date().toISOString()
             };
             
-            // تحديث واجهة المستخدم
-            updateUserUI();
-            closeLoginModal();
-            
-            saveCurrentState();
-        }
-        
-        // تسجيل الخروج
-        function logoutUser() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            updateUserUI();
-            
-            saveCurrentState();
-        }
-        
-        // إنشاء حساب جديد
-        function registerUser() {
-            let name, email, phone, password, confirmPassword;
-            
-            if (elements.registerMethod.value === 'phone') {
-                name = elements.registerPhoneName.value.trim();
-                phone = elements.registerPhone.value.trim();
-                password = elements.registerPhonePassword.value;
-                confirmPassword = elements.registerPhoneConfirmPassword.value;
+            if (questionType === 'mcq') {
+                correctAnswer = document.getElementById('correct-answer').value;
                 
-                if (!name || !phone || !password || !confirmPassword) {
-                    elements.registerError.textContent = 'الرجاء ملء جميع الحقول المطلوبة';
-                    elements.registerError.style.display = 'block';
+                for (let i = 1; i <= 4; i++) {
+                    const optionValue = document.getElementById(`option${i}`).value.trim();
+                    if (optionValue) {
+                        questionData[`option${i}`] = optionValue;
+                    }
+                }
+                
+                if (!questionData.option1 || !questionData.option2) {
+                    alert('الرجاء إدخال خيارين على الأقل');
                     return;
                 }
             } else {
-                name = elements.registerName.value.trim();
-                email = elements.registerEmail.value.trim();
-                password = elements.registerPassword.value;
-                confirmPassword = elements.registerConfirmPassword.value;
-                
-                if (!name || !email || !password || !confirmPassword) {
-                    elements.registerError.textContent = 'الرجاء ملء جميع الحقول المطلوبة';
-                    elements.registerError.style.display = 'block';
-                    return;
-                }
+                correctAnswer = document.getElementById('tf-correct-answer').value;
             }
             
-            if (password !== confirmPassword) {
-                elements.registerError.textContent = 'كلمة المرور غير متطابقة';
-                elements.registerError.style.display = 'block';
+            questionData.correctAnswer = correctAnswer;
+            
+            const questionsRef = database.ref('questions');
+            questionsRef.push(questionData)
+                .then(() => {
+                    alert('تمت إضافة السؤال بنجاح');
+                    
+                    // مسح الحقول
+                    document.getElementById('question-text').value = '';
+                    document.getElementById('question-category').value = '';
+                    for (let i = 1; i <= 4; i++) {
+                        document.getElementById(`option${i}`).value = '';
+                    }
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء إضافة السؤال: ' + error.message);
+                });
+        }
+        
+        // حفظ إعدادات النظام
+        function saveSystemSettings() {
+            const examTime = parseInt(elements.examTime.value);
+            const examActive = elements.examStatus.checked;
+            const newAdminPassword = elements.adminPasswordSetting.value;
+            
+            if (!examTime || examTime < 1) {
+                alert('الرجاء إدخال مدة اختبار صحيحة');
                 return;
             }
             
-            if (password.length < 6) {
-                elements.registerError.textContent = 'كلمة المرور يجب أن تكون على الأقل 6 أحرف';
-                elements.registerError.style.display = 'block';
+            if (!newAdminPassword) {
+                alert('الرجاء إدخال كلمة مرور إدارية');
                 return;
             }
             
-            // في تطبيق حقيقي، هنا يجب التحقق من عدم وجود حساب بنفس البريد الإلكتروني أو رقم الهاتف
-            const usersRef = database.ref('users');
-            usersRef.push({
-                name,
-                email: email || null,
-                phone: phone || null,
-                password, // في الواقع يجب تشفيرها
-                role: 'student',
-                createdAt: new Date().toISOString()
-            }).then(() => {
-                elements.registerError.textContent = 'تم إنشاء الحساب بنجاح! الرجاء تسجيل الدخول';
-                elements.registerError.style.color = 'green';
-                elements.registerError.style.display = 'block';
+            const examStatusRef = database.ref('examStatus');
+            examStatusRef.set({
+                active: examActive,
+                time: examTime
+            })
+            .then(() => {
+                adminPassword = newAdminPassword;
+                localStorage.setItem('adminPassword', newAdminPassword);
                 
-                // مسح الحقول بعد التسجيل
-                elements.registerName.value = '';
-                elements.registerEmail.value = '';
-                elements.registerPassword.value = '';
-                elements.registerConfirmPassword.value = '';
-                elements.registerPhoneName.value = '';
-                elements.registerPhone.value = '';
-                elements.registerPhonePassword.value = '';
-                elements.registerPhoneConfirmPassword.value = '';
-                
-                // الانتقال إلى نافذة تسجيل الدخول بعد ثانيتين
-                setTimeout(() => {
-                    showLoginModal();
-                    elements.registerError.style.color = '';
-                }, 2000);
-            }).catch(error => {
-                elements.registerError.textContent = 'حدث خطأ أثناء إنشاء الحساب: ' + error.message;
-                elements.registerError.style.display = 'block';
+                alert('تم حفظ الإعدادات بنجاح');
+            })
+            .catch(error => {
+                alert('حدث خطأ أثناء حفظ الإعدادات: ' + error.message);
             });
         }
         
-        // التحقق من حالة المصادقة
-        function checkAuthState() {
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                updateUserUI();
-            } else {
-                // إذا لم يكن هناك مستخدم مسجل، افترض أنه زائر
-                loginAsGuest();
+        // حفظ إعدادات التليجرام
+        function saveTelegramSettings() {
+            const botToken = elements.telegramBotToken.value.trim();
+            const chatId = elements.telegramChatId.value.trim();
+            
+            if (!botToken || !chatId) {
+                alert('الرجاء إدخال التوكن ومعرف الدردشة');
+                return;
             }
+            
+            telegramBotToken = botToken;
+            telegramChatId = chatId;
+            
+            localStorage.setItem('telegramBotToken', botToken);
+            localStorage.setItem('telegramChatId', chatId);
+            
+            alert('تم حفظ إعدادات التليجرام بنجاح');
         }
         
-        // تحديث واجهة المستخدم حسب حالة تسجيل الدخول
-        function updateUserUI() {
-            if (currentUser) {
-                const userMenu = elements.userProfile.querySelector('.user-menu');
-                userMenu.innerHTML = '';
-                
-                if (currentUser.role === 'guest') {
-                    elements.userProfile.querySelector('span').textContent = 'زائر';
-                    userMenu.innerHTML = `
-                        <div class="user-menu-item" id="login-btn">
-                            <i class="fas fa-sign-in-alt"></i>
-                            تسجيل الدخول
-                        </div>
-                        <div class="user-menu-item" id="register-btn">
-                            <i class="fas fa-user-plus"></i>
-                            إنشاء حساب
-                        </div>
-                    `;
-                } else {
-                    elements.userProfile.querySelector('span').textContent = currentUser.name;
-                    userMenu.innerHTML = `
-                        <div class="user-menu-item" style="pointer-events: none; background-color: rgba(0,0,0,0.05);">
-                            <i class="fas fa-user"></i>
-                            ${currentUser.name}
-                            <small style="display: block; font-size: 12px; color: #666;">${currentUser.email || currentUser.phone || 'لا يوجد'}</small>
-                        </div>
-                        <div class="user-menu-item" id="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i>
-                            تسجيل الخروج
-                        </div>
-                    `;
+        // حفظ إعدادات الأقسام
+        function saveSectionsSettings() {
+            const year = elements.sectionYear.value;
+            const sections = [];
+            
+            if (elements.sectionScientific.checked) sections.push('scientific');
+            if (elements.sectionLiterary.checked) sections.push('literary');
+            if (elements.sectionArabic.checked) sections.push('arabic');
+            if (elements.sectionIslamic.checked) sections.push('islamic');
+            
+            if (sections.length === 0) {
+                alert('الرجاء اختيار قسم واحد على الأقل');
+                return;
+            }
+            
+            sectionsConfig[year] = sections;
+            
+            const sectionsRef = database.ref('sectionsConfig');
+            sectionsRef.set(sectionsConfig)
+                .then(() => {
+                    alert('تم حفظ إعدادات الأقسام بنجاح');
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء حفظ إعدادات الأقسام: ' + error.message);
+                });
+        }
+        
+        // إضافة إعلان جديد
+        function addNewAd() {
+            const title = elements.adTitle.value.trim();
+            const description = elements.adDescription.value.trim();
+            const image = elements.adImage.value.trim();
+            const whatsapp = elements.adWhatsapp.value.trim();
+            const status = elements.adStatus.value;
+            
+            if (!title || !description) {
+                alert('الرجاء إدخال عنوان ووصف للإعلان');
+                return;
+            }
+            
+            const adData = {
+                title,
+                description,
+                image: image || '',
+                whatsapp: whatsapp || '',
+                status,
+                createdAt: new Date().toISOString()
+            };
+            
+            const adsRef = database.ref('ads');
+            adsRef.push(adData)
+                .then(() => {
+                    alert('تمت إضافة الإعلان بنجاح');
                     
-                    // إضافة مستمع لزر تسجيل الخروج
-                    document.getElementById('logout-btn').addEventListener('click', logoutUser);
-                }
-                
-                // إعادة إضافة مستمعي الأحداث لأزرار تسجيل الدخول والتسجيل
-                if (document.getElementById('login-btn')) {
-                    document.getElementById('login-btn').addEventListener('click', showLoginModal);
-                }
-                if (document.getElementById('register-btn')) {
-                    document.getElementById('register-btn').addEventListener('click', showRegisterModal);
-                }
+                    // مسح الحقول
+                    elements.adTitle.value = '';
+                    elements.adDescription.value = '';
+                    elements.adImage.value = '';
+                    elements.adWhatsapp.value = '';
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء إضافة الإعلان: ' + error.message);
+                });
+        }
+        
+        // حفظ إعدادات الموقع
+        function saveSiteSettings() {
+            const title = elements.siteTitle.value.trim();
+            const description = elements.siteDescription.value.trim();
+            const keywords = elements.siteKeywords.value.trim();
+            const logo = elements.siteLogo.value.trim();
+            const active = elements.siteStatus.checked;
+            const maintenanceMessage = elements.maintenanceMessage.value.trim();
+            
+            if (!title || !description || !keywords) {
+                alert('الرجاء إدخال جميع الحقول المطلوبة');
+                return;
+            }
+            
+            const siteData = {
+                title,
+                description,
+                keywords,
+                logo,
+                active,
+                maintenanceMessage
+            };
+            
+            const siteRef = database.ref('siteSettings');
+            siteRef.set(siteData)
+                .then(() => {
+                    siteSettings = siteData;
+                    document.title = siteSettings.title;
+                    
+                    alert('تم حفظ إعدادات الموقع بنجاح');
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء حفظ إعدادات الموقع: ' + error.message);
+                });
+        }
+        
+        // إضافة مادة جديدة
+        function addNewSubject() {
+            const name = elements.editSubjectName.value.trim();
+            const year = elements.editSubjectYear.value;
+            const section = elements.editSubjectSection.value;
+            const icon = elements.editSubjectIcon.value;
+            
+            if (!name) {
+                alert('الرجاء إدخال اسم المادة');
+                return;
+            }
+            
+            const subjectData = {
+                name,
+                year,
+                section,
+                icon
+            };
+            
+            const subjectsRef = database.ref('subjects');
+            subjectsRef.push(subjectData)
+                .then(() => {
+                    alert('تمت إضافة المادة بنجاح');
+                    
+                    // مسح الحقول
+                    elements.editSubjectName.value = '';
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء إضافة المادة: ' + error.message);
+                });
+        }
+        
+        // تبديل بين تبويبات لوحة التحكم
+        function switchAdminTab(tabId) {
+            elements.adminTabs.forEach(t => t.classList.remove('active'));
+            elements.adminTabContents.forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.admin-tab-btn[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+            
+            // عند التبديل إلى تبويب الإحصائيات، قم بتحديثها
+            if (tabId === 'stats') {
+                loadStats();
             }
         }
         
