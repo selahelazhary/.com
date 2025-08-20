@@ -1741,8 +1741,44 @@
                             <input type="text" id="ad-image" class="form-control" placeholder="رابط صورة الإعلان">
                         </div>
                         <div class="form-group">
-                            <label for="ad-whatsapp">رقم واتساب (اختياري):</label>
-                            <input type="text" id="ad-whatsapp" class="form-control" placeholder="رقم واتساب للتواصل">
+                            <label for="ad-link-type">نوع الرابط:</label>
+                            <select id="ad-link-type" class="form-control">
+                                <option value="whatsapp">واتساب</option>
+                                <option value="phone">اتصال هاتفي</option>
+                                <option value="website">موقع ويب</option>
+                                <option value="telegram">تيليجرام</option>
+                                <option value="none">بدون رابط</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="ad-link-container">
+                            <label for="ad-link">الرابط:</label>
+                            <input type="text" id="ad-link" class="form-control" placeholder="أدخل الرابط">
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-position">مكان الإعلان:</label>
+                            <select id="ad-position" class="form-control">
+                                <option value="top">أعلى الصفحة</option>
+                                <option value="middle">منتصف الصفحة</option>
+                                <option value="bottom">أسفل الصفحة</option>
+                                <option value="sidebar">الشريط الجانبي</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-size">حجم الإعلان:</label>
+                            <select id="ad-size" class="form-control">
+                                <option value="small">صغير</option>
+                                <option value="medium">متوسط</option>
+                                <option value="large">كبير</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-design">تصميم الإعلان:</label>
+                            <select id="ad-design" class="form-control">
+                                <option value="default">افتراضي</option>
+                                <option value="modern">حديث</option>
+                                <option value="classic">كلاسيكي</option>
+                                <option value="minimal">بسيط</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="ad-status">حالة الإعلان:</label>
@@ -2022,7 +2058,12 @@
             adTitle: document.getElementById('ad-title'),
             adDescription: document.getElementById('ad-description'),
             adImage: document.getElementById('ad-image'),
-            adWhatsapp: document.getElementById('ad-whatsapp'),
+            adLinkType: document.getElementById('ad-link-type'),
+            adLink: document.getElementById('ad-link'),
+            adLinkContainer: document.getElementById('ad-link-container'),
+            adPosition: document.getElementById('ad-position'),
+            adSize: document.getElementById('ad-size'),
+            adDesign: document.getElementById('ad-design'),
             adStatus: document.getElementById('ad-status'),
             addAdBtn: document.getElementById('add-ad-btn'),
             adsList: document.getElementById('ads-list'),
@@ -2044,6 +2085,9 @@
 
         // تهيئة التطبيق
         function initApp() {
+            // إضافة حماية ضد النسخ والهجمات
+            addSecurityMeasures();
+            
             simulateLoading();
             setupEventListeners();
             loadInitialSubjects();
@@ -2056,6 +2100,57 @@
             loadAdminData();
             
             window.addEventListener('beforeunload', saveCurrentState);
+        }
+        
+        // إضافة تدابير أمنية
+        function addSecurityMeasures() {
+            // منع نسخ المحتوى
+            document.addEventListener('copy', function(e) {
+                if (!e.target.closest('.admin-panel')) {
+                    e.preventDefault();
+                    alert('نسخ المحتوى غير مسموح به');
+                }
+            });
+            
+            // منع النقر الأيمن
+            document.addEventListener('contextmenu', function(e) {
+                if (!e.target.closest('.admin-panel')) {
+                    e.preventDefault();
+                    alert('النسخ غير مسموح به');
+                }
+            });
+            
+            // منع فتح أدوات المطورين
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.keyCode === 123) {
+                    e.preventDefault();
+                }
+                // Ctrl+Shift+I
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                    e.preventDefault();
+                }
+                // Ctrl+Shift+C
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                    e.preventDefault();
+                }
+                // Ctrl+U
+                if (e.ctrlKey && e.keyCode === 85) {
+                    e.preventDefault();
+                }
+            });
+            
+            // حماية ضد XSS
+            function sanitizeInput(input) {
+                const div = document.createElement('div');
+                div.textContent = input;
+                return div.innerHTML;
+            }
+            
+            // حماية ضد حقن SQL (على الرغم من أن Firebase NoSQL)
+            function sanitizeForDatabase(input) {
+                return input.replace(/[.$#\[\]\/]/g, '');
+            }
         }
         
         // تحميل إعدادات الموقع
@@ -2205,6 +2300,7 @@
                         <div class="question-meta">
                             <span><i class="fas fa-circle" style="color: ${ad.status === 'active' ? '#00b894' : '#d63031'}"></i> ${ad.status === 'active' ? 'نشط' : 'غير نشط'}</span>
                             <span><i class="fas fa-calendar"></i> ${new Date(ad.createdAt).toLocaleDateString('ar-EG')}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${getAdPositionText(ad.position)}</span>
                         </div>
                         <p>${ad.description}</p>
                         <div class="question-actions">
@@ -2316,6 +2412,8 @@
                         elements.splashScreen.style.opacity = '0';
                         setTimeout(() => {
                             elements.splashScreen.style.display = 'none';
+                            // بعد انتهاء الشاشة التمهيدية، عرض الشاشة الرئيسية مباشرة
+                            elements.yearSelectionContainer.style.display = 'grid';
                         }, 500);
                     }, 500);
                 }
@@ -2340,21 +2438,89 @@
         function showAd(ad) {
             if (!ad) return;
             
+            let linkHtml = '';
+            if (ad.linkType && ad.link) {
+                switch(ad.linkType) {
+                    case 'whatsapp':
+                        linkHtml = `<a href="https://wa.me/${ad.link}" class="ad-whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
+                        </a>`;
+                        break;
+                    case 'phone':
+                        linkHtml = `<a href="tel:${ad.link}" class="ad-whatsapp-btn" style="background-color: #4CAF50;">
+                            <i class="fas fa-phone"></i> اتصل بنا
+                        </a>`;
+                        break;
+                    case 'website':
+                        linkHtml = `<a href="${ad.link}" class="ad-whatsapp-btn" style="background-color: #2196F3;" target="_blank">
+                            <i class="fas fa-globe"></i> زور موقعنا
+                        </a>`;
+                        break;
+                    case 'telegram':
+                        linkHtml = `<a href="https://t.me/${ad.link}" class="ad-whatsapp-btn" style="background-color: #0088cc;" target="_blank">
+                            <i class="fab fa-telegram"></i> انضم إلى قناتنا
+                        </a>`;
+                        break;
+                }
+            }
+            
             const adHtml = `
-                <div class="ad-container">
+                <div class="ad-container" style="${getAdStyle(ad)}">
                     ${ad.image ? `<img src="${ad.image}" alt="${ad.title}" class="ad-image">` : ''}
                     <h3 class="ad-title">${ad.title}</h3>
                     <p class="ad-description">${ad.description}</p>
-                    ${ad.whatsapp ? `
-                        <a href="https://wa.me/${ad.whatsapp}" class="ad-whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
-                        </a>
-                    ` : ''}
+                    ${linkHtml}
                 </div>
             `;
             
             elements.adContainer.innerHTML = adHtml;
             elements.adContainer.style.display = 'block';
+        }
+        
+        // الحصول على نمط الإعلان بناءً على إعداداته
+        function getAdStyle(ad) {
+            let style = '';
+            
+            // حجم الإعلان
+            switch(ad.size) {
+                case 'small':
+                    style += 'max-width: 300px; margin: 0 auto;';
+                    break;
+                case 'medium':
+                    style += 'max-width: 500px; margin: 0 auto;';
+                    break;
+                case 'large':
+                    style += 'max-width: 100%;';
+                    break;
+            }
+            
+            // تصميم الإعلان
+            switch(ad.design) {
+                case 'modern':
+                    style += 'background: linear-gradient(135deg, #f5f7fa, #e4e8f0); border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);';
+                    break;
+                case 'classic':
+                    style += 'background: #fff; border: 2px solid #d1d7e0; box-shadow: 0 3px 10px rgba(0,0,0,0.08);';
+                    break;
+                case 'minimal':
+                    style += 'background: #f8f9fa; border: 1px dashed #dee2e6; box-shadow: none;';
+                    break;
+                default:
+                    style += 'background: white;';
+            }
+            
+            return style;
+        }
+        
+        // الحصول على نص مكان الإعلان
+        function getAdPositionText(position) {
+            switch(position) {
+                case 'top': return 'أعلى الصفحة';
+                case 'middle': return 'منتصف الصفحة';
+                case 'bottom': return 'أسفل الصفحة';
+                case 'sidebar': return 'الشريط الجانبي';
+                default: return position;
+            }
         }
         
         // تحميل إعدادات التليجرام
@@ -2577,6 +2743,17 @@
             if (elements.filterYear && elements.filterSection) {
                 elements.filterYear.addEventListener('change', loadQuestionsForAdmin);
                 elements.filterSection.addEventListener('change', loadQuestionsForAdmin);
+            }
+            
+            // التحكم في ظهور حقل الرابط بناءً على نوع الرابط
+            if (elements.adLinkType) {
+                elements.adLinkType.addEventListener('change', function() {
+                    if (this.value === 'none') {
+                        elements.adLinkContainer.style.display = 'none';
+                    } else {
+                        elements.adLinkContainer.style.display = 'block';
+                    }
+                });
             }
         }
         
@@ -3340,7 +3517,11 @@
             const title = elements.adTitle.value.trim();
             const description = elements.adDescription.value.trim();
             const image = elements.adImage.value.trim();
-            const whatsapp = elements.adWhatsapp.value.trim();
+            const linkType = elements.adLinkType.value;
+            const link = elements.adLink.value.trim();
+            const position = elements.adPosition.value;
+            const size = elements.adSize.value;
+            const design = elements.adDesign.value;
             const status = elements.adStatus.value;
             
             if (!title || !description) {
@@ -3348,11 +3529,20 @@
                 return;
             }
             
+            if (linkType !== 'none' && !link) {
+                alert('الرجاء إدخال الرابط');
+                return;
+            }
+            
             const adData = {
                 title,
                 description,
                 image: image || '',
-                whatsapp: whatsapp || '',
+                linkType: linkType !== 'none' ? linkType : '',
+                link: linkType !== 'none' ? link : '',
+                position,
+                size,
+                design,
                 status,
                 createdAt: new Date().toISOString()
             };
@@ -3366,7 +3556,7 @@
                     elements.adTitle.value = '';
                     elements.adDescription.value = '';
                     elements.adImage.value = '';
-                    elements.adWhatsapp.value = '';
+                    elements.adLink.value = '';
                 })
                 .catch(error => {
                     alert('حدث خطأ أثناء إضافة الإعلان: ' + error.message);
